@@ -6,15 +6,9 @@ import { Socket, io } from 'socket.io-client';
 
 interface LithiaConfig {
   debug: boolean;
-  srcDir: string;
-  routesDir: string;
-  outputDir: string;
-  router: {
-    globalPrefix: string;
-  };
   server: {
-    port: number;
     host: string;
+    port: number;
     request: {
       queryParser: {
         array: {
@@ -31,20 +25,15 @@ interface LithiaConfig {
       maxBodySize: number;
     };
   };
-  logger: {
-    colors: boolean;
-    timestamp: boolean;
-    level: 'debug' | 'info' | 'warn' | 'error';
-  };
   build: {
-    mode: 'no-bundle' | 'full-bundle';
-    externalPackages: string[];
+    mode: string;
   };
   studio: {
     enabled: boolean;
   };
-  globalMiddlewares: string[];
-  hooks: Record<string, string[]>;
+  cors: {
+    exposedHeaders: string[];
+  };
 }
 
 interface LithiaContextType {

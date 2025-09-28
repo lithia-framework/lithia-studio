@@ -7,6 +7,7 @@ import {
   LifeBuoy,
   LucideIcon,
   Menu,
+  Settings,
   X,
 } from 'lucide-react';
 import Image from 'next/image';
@@ -59,6 +60,17 @@ const defaultNavigation: NavSection[] = [
         href: '/logs',
         icon: BarChart3,
         description: 'View server logs',
+      },
+    ],
+  },
+  {
+    title: 'Configuration',
+    items: [
+      {
+        name: 'Settings',
+        href: '/configuration',
+        icon: Settings,
+        description: 'View Lithia configuration',
       },
     ],
   },
