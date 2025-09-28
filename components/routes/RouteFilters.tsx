@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import { Filter, Search } from 'lucide-react';
+import type React from 'react';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
-import { Search, Filter } from 'lucide-react';
 
 interface FilterOption {
   value: string;

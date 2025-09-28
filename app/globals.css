@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 :root {
   --background: #020618;
@@ -52,37 +52,33 @@ body {
 
 /* Monaco Editor Suggestions Popup */
 .monaco-editor .suggest-widget {
-  background: var(--background-secondary) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
-  backdrop-filter: blur(8px) !important;
+  background: var(--background-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
 }
 
 .monaco-editor .suggest-widget .monaco-list {
-  background: transparent !important;
+  background: transparent;
 }
 
 .monaco-editor .suggest-widget .monaco-list .monaco-list-row {
-  background: transparent !important;
-  color: var(--foreground) !important;
+  background: transparent;
+  color: var(--foreground);
 }
 
 .monaco-editor .suggest-widget .monaco-list .monaco-list-row:hover {
-  background: rgba(255, 255, 255, 0.05) !important;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .monaco-editor .suggest-widget .monaco-list .monaco-list-row.focused {
-  background: rgba(44, 252, 129, 0.1) !important;
-  color: var(--primary) !important;
+  background: rgba(44, 252, 129, 0.1);
+  color: var(--primary);
 }
 
-.monaco-editor
-  .suggest-widget
-  .monaco-list
-  .monaco-list-row
-  .monaco-icon-label {
-  color: var(--foreground) !important;
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row .monaco-icon-label {
+  color: var(--foreground);
 }
 
 .monaco-editor
@@ -91,7 +87,7 @@ body {
   .monaco-list-row
   .monaco-icon-label
   .monaco-icon-label-description-container {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .monaco-editor
@@ -101,18 +97,17 @@ body {
   .monaco-icon-label
   .monaco-icon-label-description-container
   .monaco-icon-label-description {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* No suggestions message */
-.monaco-editor
-  .suggest-widget
+.monaco-editor .suggest-widget
   .monaco-list
   .monaco-list-row
   .monaco-icon-label
   .monaco-icon-label-description-container
   .monaco-icon-label-description:empty::after {
-  content: 'No suggestions.' !important;
-  color: rgba(255, 255, 255, 0.4) !important;
-  font-style: italic !important;
+  content: "No suggestions.";
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
 }

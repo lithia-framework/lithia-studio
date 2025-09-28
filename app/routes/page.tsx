@@ -1,18 +1,18 @@
 'use client';
 
+import { Plus } from 'lucide-react';
+import { useContext, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { LithiaContext } from '@/components/contexts/LithiaContext';
 import { useRoutes } from '@/components/contexts/RoutesContext';
 import { RouteFilters } from '@/components/routes/RouteFilters';
 import { RouteList } from '@/components/routes/RouteList';
-import { RouteTester } from '@/components/routes/RouteTester';
 import { RoutesSkeleton } from '@/components/routes/RoutesSkeleton';
-import { BodyData } from '@/components/routes/tabs/BodyTab';
+import { RouteTester } from '@/components/routes/RouteTester';
+import type { BodyData } from '@/components/routes/tabs/BodyTab';
 import { Button } from '@/components/ui/Button';
-import { Route } from '@/types';
+import type { Route } from '@/types';
 import { replaceDynamicParams } from '@/utils/route-params';
-import { Plus } from 'lucide-react';
-import { useContext, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 interface RouteWithStatus extends Route {
   env?: string;
@@ -55,18 +55,12 @@ export default function RoutesPage() {
 
   // API Testing states
   const [currentView, setCurrentView] = useState<'list' | 'tester'>('list');
-  const [selectedRoute, setSelectedRoute] = useState<RouteWithStatus | null>(
-    null,
-  );
+  const [selectedRoute, setSelectedRoute] = useState<RouteWithStatus | null>(null);
   const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null);
   const [isTesting, setIsTesting] = useState(false);
 
   // Form for filters
-  const {
-    control: {},
-    watch: watchFilters,
-    setValue: setFilterValue,
-  } = useForm<FilterForm>({
+  const { watch: watchFilters, setValue: setFilterValue } = useForm<FilterForm>({
     defaultValues: {
       searchTerm: '',
       methodFilter: 'all',
@@ -76,28 +70,6 @@ export default function RoutesPage() {
   const filterValues = watchFilters();
   const searchTerm = filterValues.searchTerm;
   const methodFilter = filterValues.methodFilter;
-
-  // Form for API testing
-  const {} = useForm<ApiTestForm>({
-    defaultValues: {
-      dynamicParams: {},
-      queryParams: [{ key: '', value: '' }],
-      headers: [{ key: '', value: '' }],
-      authType: 'none',
-      authToken: '',
-      authUsername: '',
-      authPassword: '',
-      authApiKey: '',
-      authApiKeyHeader: 'X-API-Key',
-      bodyData: {
-        type: 'none',
-        rawContent: '',
-        rawFormat: 'json',
-        formData: [{ key: '', value: '', type: 'text' }],
-        urlEncoded: [{ key: '', value: '' }],
-      },
-    },
-  });
 
   // Convert routes to RouteWithStatus and apply filters
   const filteredRoutes = useMemo(() => {
@@ -110,20 +82,14 @@ export default function RoutesPage() {
     if (filterValues.searchTerm) {
       filtered = filtered.filter(
         (route) =>
-          route.path
-            .toLowerCase()
-            .includes(filterValues.searchTerm.toLowerCase()) ||
-          (route.method || '')
-            .toLowerCase()
-            .includes(filterValues.searchTerm.toLowerCase()),
+          route.path.toLowerCase().includes(filterValues.searchTerm.toLowerCase()) ||
+          (route.method || '').toLowerCase().includes(filterValues.searchTerm.toLowerCase()),
       );
     }
 
     // Method filter
     if (filterValues.methodFilter !== 'all') {
-      filtered = filtered.filter(
-        (route) => (route.method || 'ALL') === filterValues.methodFilter,
-      );
+      filtered = filtered.filter((route) => (route.method || 'ALL') === filterValues.methodFilter);
     }
 
     return filtered;
@@ -145,10 +111,7 @@ export default function RoutesPage() {
       .sort((a, b) => a.label.localeCompare(b.label));
 
     // Add "All Methods" option at the beginning
-    return [
-      { value: 'all', label: 'All Methods', count: routes.length },
-      ...methods,
-    ];
+    return [{ value: 'all', label: 'All Methods', count: routes.length }, ...methods];
   }, [routes]);
 
   // Handle route selection for API testing
@@ -190,19 +153,11 @@ export default function RoutesPage() {
 
       // Add authentication headers (these will override custom headers if same key)
       if (data.authType === 'bearer' && data.authToken) {
-        headers['Authorization'] = `Bearer ${data.authToken}`;
-      } else if (
-        data.authType === 'basic' &&
-        data.authUsername &&
-        data.authPassword
-      ) {
+        headers.Authorization = `Bearer ${data.authToken}`;
+      } else if (data.authType === 'basic' && data.authUsername && data.authPassword) {
         const credentials = btoa(`${data.authUsername}:${data.authPassword}`);
-        headers['Authorization'] = `Basic ${credentials}`;
-      } else if (
-        data.authType === 'api-key' &&
-        data.authApiKey &&
-        data.authApiKeyHeader
-      ) {
+        headers.Authorization = `Basic ${credentials}`;
+      } else if (data.authType === 'api-key' && data.authApiKey && data.authApiKeyHeader) {
         headers[data.authApiKeyHeader] = data.authApiKey;
       }
 
@@ -223,10 +178,7 @@ export default function RoutesPage() {
       const baseUrl = `http://${host}:${port}`;
 
       // Replace dynamic parameters in route path
-      const finalPath = replaceDynamicParams(
-        selectedRoute.path,
-        data.dynamicParams,
-      );
+      const finalPath = replaceDynamicParams(selectedRoute.path, data.dynamicParams);
       const url = new URL(finalPath, baseUrl);
 
       queryParams.forEach((value, key) => {
@@ -234,21 +186,11 @@ export default function RoutesPage() {
       });
 
       // Make request
-      const validMethods = [
-        'GET',
-        'POST',
-        'PUT',
-        'DELETE',
-        'PATCH',
-        'HEAD',
-        'OPTIONS',
-      ];
+      const validMethods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'];
 
       // Use method from form if route method is undefined, otherwise use route method
       const methodToUse = selectedRoute.method || data.method || 'GET';
-      const method = validMethods.includes(methodToUse?.toUpperCase() || '')
-        ? methodToUse.toUpperCase()
-        : 'GET';
+      const method = validMethods.includes(methodToUse?.toUpperCase() || '') ? methodToUse.toUpperCase() : 'GET';
 
       // Process body based on type
       let requestBody: string | FormData | undefined;
@@ -327,10 +269,7 @@ export default function RoutesPage() {
       });
 
       // Detect content type and process response accordingly
-      const responseContentType =
-        responseHeaders['content-type'] ||
-        responseHeaders['Content-Type'] ||
-        '';
+      const responseContentType = responseHeaders['content-type'] || responseHeaders['Content-Type'] || '';
       let responseData: unknown;
       let responseSize: number;
 
@@ -381,12 +320,10 @@ export default function RoutesPage() {
       if (error instanceof TypeError) {
         if (error.message.includes('Failed to fetch')) {
           errorType = 'Unable to fetch';
-          errorMessage =
-            'Check the browser console for detailed error information.';
+          errorMessage = 'Check the browser console for detailed error information.';
         } else if (error.message.includes('NetworkError')) {
           errorType = 'Unable to fetch';
-          errorMessage =
-            'Network connection failed. Check if server is running.';
+          errorMessage = 'Network connection failed. Check if server is running.';
         } else {
           errorMessage = error.message;
         }
@@ -418,12 +355,8 @@ export default function RoutesPage() {
         <div className="flex-shrink-0 border-b border-white/10 p-8 backdrop-blur-lg">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-foreground mb-2 text-3xl font-bold">
-                Server Routes
-              </h1>
-              <p className="text-gray-400">
-                Manage and test your API routes in real-time
-              </p>
+              <h1 className="text-foreground mb-2 text-3xl font-bold">Server Routes</h1>
+              <p className="text-gray-400">Manage and test your API routes in real-time</p>
             </div>
             <Button variant="primary" size="sm">
               <Plus className="h-4 w-4" />
@@ -468,12 +401,8 @@ export default function RoutesPage() {
       <div className="sticky top-0 z-10 border-b border-white/10 p-8 backdrop-blur-lg">
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-foreground mb-2 text-3xl font-bold">
-              Server Routes
-            </h1>
-            <p className="text-gray-400">
-              Manage and test your API routes in real-time
-            </p>
+            <h1 className="text-foreground mb-2 text-3xl font-bold">Server Routes</h1>
+            <p className="text-gray-400">Manage and test your API routes in real-time</p>
           </div>
           <div className="flex items-center space-x-3">
             <Button
@@ -482,8 +411,7 @@ export default function RoutesPage() {
                 console.log('Create route clicked');
               }}
               variant="primary"
-              size="sm"
-            >
+              size="sm">
               <Plus className="h-4 w-4" />
               <span>Create Route</span>
             </Button>

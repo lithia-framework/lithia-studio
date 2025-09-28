@@ -1,27 +1,12 @@
 'use client';
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from 'react';
+import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 import { LithiaContext } from './LithiaContext';
 
 export interface LogEntry {
   id: string;
   timestamp: Date;
-  level:
-    | 'info'
-    | 'warn'
-    | 'error'
-    | 'debug'
-    | 'success'
-    | 'ready'
-    | 'wait'
-    | 'event'
-    | 'trace';
+  level: 'info' | 'warn' | 'error' | 'debug' | 'success' | 'ready' | 'wait' | 'event' | 'trace';
   message: string;
   args?: unknown[];
   source?: string;
@@ -33,17 +18,7 @@ export interface LogEntry {
 
 interface LogFilters {
   searchTerm: string;
-  levelFilter:
-    | 'all'
-    | 'info'
-    | 'warn'
-    | 'error'
-    | 'debug'
-    | 'success'
-    | 'ready'
-    | 'wait'
-    | 'event'
-    | 'trace';
+  levelFilter: 'all' | 'info' | 'warn' | 'error' | 'debug' | 'success' | 'ready' | 'wait' | 'event' | 'trace';
   timeFilter: 'all' | '15m' | '30m' | '1h' | '6h' | '24h' | '7d';
   sourceFilter: 'all' | 'user' | 'lithia';
 }
@@ -107,9 +82,7 @@ export function LogsProvider({ children }: LogsProviderProps) {
     if (filters.searchTerm) {
       filtered = filtered.filter(
         (log) =>
-          log.message
-            .toLowerCase()
-            .includes(filters.searchTerm.toLowerCase()) ||
+          log.message.toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
           log.source?.toLowerCase().includes(filters.searchTerm.toLowerCase()),
       );
     }
@@ -135,10 +108,7 @@ export function LogsProvider({ children }: LogsProviderProps) {
 
       filtered = filtered.filter((log) => {
         // Ensure timestamp is a Date object
-        const logTime =
-          log.timestamp instanceof Date
-            ? log.timestamp
-            : new Date(log.timestamp);
+        const logTime = log.timestamp instanceof Date ? log.timestamp : new Date(log.timestamp);
         return logTime >= cutoff;
       });
     }
@@ -153,10 +123,7 @@ export function LogsProvider({ children }: LogsProviderProps) {
 
   const exportLogs = () => {
     const logText = filteredLogs
-      .map(
-        (log) =>
-          `[${log.timestamp.toLocaleString()}] ${log.level.toUpperCase()}: ${log.message}`,
-      )
+      .map((log) => `[${log.timestamp.toLocaleString()}] ${log.level.toUpperCase()}: ${log.message}`)
       .join('\n');
 
     const blob = new Blob([logText], { type: 'text/plain' });

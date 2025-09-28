@@ -1,7 +1,8 @@
 'use client';
 
 import Editor, { loader } from '@monaco-editor/react';
-import React, { useCallback, useEffect } from 'react';
+import type React from 'react';
+import { useCallback, useEffect } from 'react';
 
 // Theme configurations
 const THEME_CONFIGS = {
@@ -112,8 +113,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
         monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
           target: monaco.languages.typescript.ScriptTarget.ES2020,
           allowNonTsExtensions: true,
-          moduleResolution:
-            monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+          moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
           module: monaco.languages.typescript.ModuleKind.ESNext,
           noEmit: true,
           esModuleInterop: true,
@@ -276,10 +276,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
           },
         }}
         onMount={(editor, monaco) => {
-          editor.addCommand(
-            monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
-            () => {},
-          );
+          editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {});
         }}
       />
     </div>

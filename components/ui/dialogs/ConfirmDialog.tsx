@@ -1,8 +1,8 @@
 'use client';
 
-import { ReactNode } from 'react';
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import type { ReactNode } from 'react';
 import { Button } from '@/components/ui/Button';
 
 interface ConfirmDialogProps {
@@ -28,12 +28,7 @@ export function ConfirmDialog({
   variant = 'danger',
 }: ConfirmDialogProps) {
   return (
-    <Dialog
-      open={isOpen}
-      as="div"
-      className="relative z-50 focus:outline-none"
-      onClose={onClose}
-    >
+    <Dialog open={isOpen} as="div" className="relative z-50 focus:outline-none" onClose={onClose}>
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -50,16 +45,13 @@ export function ConfirmDialog({
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel
             transition
-            className="bg-background-secondary data-closed:transform-[scale(95%)] data-closed:opacity-0 w-full max-w-md rounded-xl border border-white/10 p-6 backdrop-blur-2xl duration-300 ease-out"
-          >
+            className="bg-background-secondary data-closed:transform-[scale(95%)] data-closed:opacity-0 w-full max-w-md rounded-xl border border-white/10 p-6 backdrop-blur-2xl duration-300 ease-out">
             <div className="space-y-4">
               <div className="space-y-2">
                 <DialogTitle as="h3" className="text-xl font-bold text-white">
                   {title}
                 </DialogTitle>
-                {description && (
-                  <p className="text-sm text-white/70">{description}</p>
-                )}
+                {description && <p className="text-sm text-white/70">{description}</p>}
               </div>
 
               <div className="flex justify-end space-x-3">
@@ -68,11 +60,7 @@ export function ConfirmDialog({
                     {cancelText}
                   </Button>
                 )}
-                <Button
-                  onClick={onConfirm}
-                  variant={variant === 'danger' ? 'danger' : 'primary'}
-                  size="md"
-                >
+                <Button onClick={onConfirm} variant={variant === 'danger' ? 'danger' : 'primary'} size="md">
                   {confirmText}
                 </Button>
               </div>

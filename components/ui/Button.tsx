@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 interface ButtonProps {
   children: ReactNode;
@@ -29,7 +29,6 @@ export function Button({
         return 'bg-red-500/20 text-red-400 border-red-500/30 hover:bg-red-500/30';
       case 'outline':
         return 'bg-transparent text-gray-300 border-white/20 hover:bg-white/5';
-      case 'secondary':
       default:
         return 'bg-white/5 text-gray-300 border-white/10 hover:bg-white/10';
     }
@@ -41,7 +40,6 @@ export function Button({
         return 'px-3 py-1.5 text-xs';
       case 'lg':
         return 'px-6 py-3 text-base';
-      case 'md':
       default:
         return 'px-4 py-2 text-sm';
     }
@@ -52,8 +50,7 @@ export function Button({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`group relative flex cursor-pointer items-center justify-center space-x-2 rounded-lg border font-medium backdrop-blur-lg transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${getVariantClasses()} ${getSizeClasses()} ${className} `}
-    >
+      className={`group relative flex cursor-pointer items-center justify-center space-x-2 rounded-lg border font-medium backdrop-blur-lg transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${getVariantClasses()} ${getSizeClasses()} ${className} `}>
       {children}
     </button>
   );

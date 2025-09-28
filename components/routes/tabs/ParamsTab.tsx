@@ -1,9 +1,9 @@
 'use client';
 
+import { Trash2 } from 'lucide-react';
+import type React from 'react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Trash2 } from 'lucide-react';
-import React from 'react';
 
 interface ParamsTabProps {
   params: Array<{ key: string; value: string }>;
@@ -11,11 +11,7 @@ interface ParamsTabProps {
 }
 
 export const ParamsTab: React.FC<ParamsTabProps> = ({ params, onChange }) => {
-  const updateParam = (
-    index: number,
-    field: 'key' | 'value',
-    value: string,
-  ) => {
+  const updateParam = (index: number, field: 'key' | 'value', value: string) => {
     const newParams = [...params];
     newParams[index] = { ...newParams[index], [field]: value };
     onChange(newParams);
@@ -69,8 +65,7 @@ export const ParamsTab: React.FC<ParamsTabProps> = ({ params, onChange }) => {
                   variant={params.length === 1 ? 'secondary' : 'danger'}
                   size="md"
                   onClick={() => removeParam(index)}
-                  disabled={params.length === 1}
-                >
+                  disabled={params.length === 1}>
                   <Trash2 className="h-5 w-5" />
                 </Button>
               </div>

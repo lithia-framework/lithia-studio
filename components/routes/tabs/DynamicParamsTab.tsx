@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import type React from 'react';
+import { useEffect } from 'react';
 import { Input } from '@/components/ui/Input';
 import { extractDynamicParamsWithKeys } from '@/utils/route-params';
 
@@ -54,8 +55,7 @@ export const DynamicParamsTab: React.FC<DynamicParamsTabProps> = ({
             <Input
               key={paramInfo.key}
               label={`${paramInfo.name} ${
-                dynamicParamInfo.filter((p) => p.name === paramInfo.name)
-                  .length > 1
+                dynamicParamInfo.filter((p) => p.name === paramInfo.name).length > 1
                   ? `(${paramInfo.position + 1})`
                   : ''
               }`}

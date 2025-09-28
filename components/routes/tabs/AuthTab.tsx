@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import type React from 'react';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 
@@ -39,9 +39,7 @@ export const AuthTab: React.FC<AuthTabProps> = ({
       <div>
         <Select
           value={authType}
-          onChange={(value) =>
-            onAuthTypeChange(value as 'none' | 'bearer' | 'basic' | 'api-key')
-          }
+          onChange={(value) => onAuthTypeChange(value as 'none' | 'bearer' | 'basic' | 'api-key')}
           options={[
             { value: 'none', label: 'None' },
             { value: 'bearer', label: 'Bearer Token' },

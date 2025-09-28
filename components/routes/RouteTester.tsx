@@ -1,16 +1,17 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
-import { Select } from '@/components/ui/Select';
-import { ConfirmDialog } from '@/components/ui/dialogs/ConfirmDialog';
-import { Route } from '@/types';
-import { extractDynamicParams } from '@/utils/route-params';
 import { ArrowLeft, RefreshCw, Send, Trash2 } from 'lucide-react';
-import React, { useState } from 'react';
+import type React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/Button';
+import { ConfirmDialog } from '@/components/ui/dialogs/ConfirmDialog';
+import { Select } from '@/components/ui/Select';
+import type { Route } from '@/types';
+import { extractDynamicParams } from '@/utils/route-params';
 import { RequestConfigSections } from './RequestConfigSections';
 import { ResponsePanel } from './ResponsePanel';
-import { BodyData } from './tabs/BodyTab';
+import type { BodyData } from './tabs/BodyTab';
 
 interface RouteWithStatus extends Route {
   status?: 'active' | 'inactive' | 'error';
@@ -117,9 +118,9 @@ export const RouteTester: React.FC<RouteTesterProps> = ({
         <div className="flex items-center justify-between">
           <div>
             <button
+              type="button"
               onClick={onGoBack}
-              className="mb-2 flex cursor-pointer items-center space-x-2 text-gray-400 transition-colors hover:text-white"
-            >
+              className="mb-2 flex cursor-pointer items-center space-x-2 text-gray-400 transition-colors hover:text-white">
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Routes</span>
             </button>
@@ -129,9 +130,7 @@ export const RouteTester: React.FC<RouteTesterProps> = ({
                   <span className="text-primary font-mono text-3xl">
                     {(selectedRoute.method || 'ALL').toUpperCase()}
                   </span>
-                  <span className="font-mono text-xl">
-                    {selectedRoute.path}
-                  </span>
+                  <span className="font-mono text-xl">{selectedRoute.path}</span>
                 </span>
               ) : (
                 'Route Tester'
@@ -141,27 +140,12 @@ export const RouteTester: React.FC<RouteTesterProps> = ({
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-3">
-            <Button
-              type="button"
-              onClick={handleClear}
-              variant="danger"
-              size="sm"
-            >
+            <Button type="button" onClick={handleClear} variant="danger" size="sm">
               <Trash2 className="h-4 w-4" />
               Clear
             </Button>
-            <Button
-              type="button"
-              onClick={handleSubmit(onSubmit)}
-              disabled={isTesting}
-              variant="primary"
-              size="sm"
-            >
-              {isTesting ? (
-                <RefreshCw className="h-4 w-4 animate-spin" />
-              ) : (
-                <Send className="h-4 w-4" />
-              )}
+            <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isTesting} variant="primary" size="sm">
+              {isTesting ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
               <span>{isTesting ? 'Testing...' : 'Send Request'}</span>
             </Button>
           </div>
@@ -173,18 +157,14 @@ export const RouteTester: React.FC<RouteTesterProps> = ({
         {/* Request Panel */}
         <div className="flex-1 overflow-y-auto border-r border-white/10">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-white">
-              Request Configuration
-            </h2>
+            <h2 className="text-lg font-semibold text-white">Request Configuration</h2>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Fixed Method and URL */}
             <div className="grid grid-cols-2 gap-4 border-b border-white/10 px-6 pb-6">
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-300">
-                  Method
-                </label>
+                <label className="mb-2 block text-sm font-medium text-gray-300">Method</label>
                 {selectedRoute?.method ? (
                   <div className="bg-background-secondary rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300">
                     {selectedRoute.method.toUpperCase()}
@@ -208,9 +188,7 @@ export const RouteTester: React.FC<RouteTesterProps> = ({
                 )}
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-300">
-                  Path
-                </label>
+                <label className="mb-2 block text-sm font-medium text-gray-300">Path</label>
                 <div className="bg-background-secondary rounded-lg border border-white/10 px-4 py-2 font-mono text-sm text-gray-300">
                   {selectedRoute?.path || ''}
                 </div>
@@ -240,23 +218,15 @@ export const RouteTester: React.FC<RouteTesterProps> = ({
                   urlEncoded: [{ key: '', value: '' }],
                 }
               }
-              onDynamicParamsChange={(params) =>
-                setValue('dynamicParams', params)
-              }
+              onDynamicParamsChange={(params) => setValue('dynamicParams', params)}
               onQueryParamsChange={(params) => setValue('queryParams', params)}
               onHeadersChange={(headers) => setValue('headers', headers)}
               onAuthTypeChange={(type) => setValue('authType', type)}
               onAuthTokenChange={(token) => setValue('authToken', token)}
-              onAuthUsernameChange={(username) =>
-                setValue('authUsername', username)
-              }
-              onAuthPasswordChange={(password) =>
-                setValue('authPassword', password)
-              }
+              onAuthUsernameChange={(username) => setValue('authUsername', username)}
+              onAuthPasswordChange={(password) => setValue('authPassword', password)}
               onAuthApiKeyChange={(apiKey) => setValue('authApiKey', apiKey)}
-              onAuthApiKeyHeaderChange={(header) =>
-                setValue('authApiKeyHeader', header)
-              }
+              onAuthApiKeyHeaderChange={(header) => setValue('authApiKeyHeader', header)}
               onBodyDataChange={(bodyData) => setValue('bodyData', bodyData)}
               onDuplicateParamsDetected={handleDuplicateParamsDetected}
             />

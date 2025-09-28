@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Route } from '@/types';
+import type React from 'react';
+import type { Route } from '@/types';
 
 interface RouteWithStatus extends Route {
   status?: 'active' | 'inactive' | 'error';
@@ -16,29 +16,19 @@ interface RouteEntryProps {
   getDisplayFilePath: (route: RouteWithStatus) => string;
 }
 
-export const RouteEntry: React.FC<RouteEntryProps> = ({
-  route,
-  onClick,
-  getMethodColor,
-  getDisplayFilePath,
-}) => {
+export const RouteEntry: React.FC<RouteEntryProps> = ({ route, onClick, getMethodColor, getDisplayFilePath }) => {
   return (
     <div
       onClick={onClick}
-      className="hover:bg-background-secondary group cursor-pointer px-6 py-4 font-mono transition-all"
-    >
+      className="hover:bg-background-secondary group cursor-pointer px-6 py-4 font-mono transition-all">
       <div className="flex items-start space-x-4">
         <div className="min-w-0 flex-1">
           <div className="mb-1 flex items-center space-x-2">
-            <span
-              className={`rounded px-2 py-1 text-xs font-medium uppercase ${getMethodColor(route.method)}`}
-            >
+            <span className={`rounded px-2 py-1 text-xs font-medium uppercase ${getMethodColor(route.method)}`}>
               {route.method || 'ALL'}
             </span>
             <span className="text-gray-500">•</span>
-            <code className="font-mono text-sm text-gray-300">
-              {route.path || 'No path'}
-            </code>
+            <code className="font-mono text-sm text-gray-300">{route.path || 'No path'}</code>
             {route.dynamic && (
               <>
                 <span className="text-gray-500">•</span>
@@ -48,9 +38,7 @@ export const RouteEntry: React.FC<RouteEntryProps> = ({
           </div>
           <div className="flex items-center justify-between">
             <div className="text-xs">
-              <span className="font-mono text-gray-500">
-                {getDisplayFilePath(route)}
-              </span>
+              <span className="font-mono text-gray-500">{getDisplayFilePath(route)}</span>
             </div>
             <div className="flex items-center space-x-2 text-xs text-gray-500 opacity-0 transition-opacity group-hover:opacity-100">
               <span>Click to test</span>

@@ -1,11 +1,11 @@
 'use client';
 
-import React, { forwardRef } from 'react';
 import { CheckIcon } from 'lucide-react';
+import type React from 'react';
+import { forwardRef } from 'react';
 import { cn } from '@/utils/cn';
 
-interface CheckboxProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label?: string;
   description?: string;
   error?: string;
@@ -30,8 +30,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     },
     ref,
   ) => {
-    const baseClasses =
-      'relative inline-flex items-center transition-all duration-200';
+    const baseClasses = 'relative inline-flex items-center transition-all duration-200';
 
     const sizeClasses = {
       sm: 'text-xs',
@@ -71,16 +70,11 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       }
 
       const uncheckedClasses = {
-        default:
-          'border-gray-600 bg-gray-800 hover:border-gray-500 focus:ring-gray-500',
-        primary:
-          'border-gray-600 bg-gray-800 hover:border-primary focus:ring-primary',
-        success:
-          'border-gray-600 bg-gray-800 hover:border-green-500 focus:ring-green-500',
-        warning:
-          'border-gray-600 bg-gray-800 hover:border-yellow-500 focus:ring-yellow-500',
-        error:
-          'border-gray-600 bg-gray-800 hover:border-red-500 focus:ring-red-500',
+        default: 'border-gray-600 bg-gray-800 hover:border-gray-500 focus:ring-gray-500',
+        primary: 'border-gray-600 bg-gray-800 hover:border-primary focus:ring-primary',
+        success: 'border-gray-600 bg-gray-800 hover:border-green-500 focus:ring-green-500',
+        warning: 'border-gray-600 bg-gray-800 hover:border-yellow-500 focus:ring-yellow-500',
+        error: 'border-gray-600 bg-gray-800 hover:border-red-500 focus:ring-red-500',
       };
 
       return `${base} ${uncheckedClasses[variant]}`;
@@ -112,7 +106,8 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             {...props}
           />
 
-          <div
+          <button
+            type="button"
             className={cn(
               checkboxSizeClasses[size],
               getCheckboxClasses(),
@@ -126,8 +121,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                 } as React.ChangeEvent<HTMLInputElement>;
                 onChange(syntheticEvent);
               }
-            }}
-          >
+            }}>
             {checked && (
               <CheckIcon
                 className={cn(
@@ -137,16 +131,13 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                 )}
               />
             )}
-          </div>
+          </button>
 
           {(label || description) && (
             <div className="ml-3">
               {label && (
                 <label
-                  className={cn(
-                    getLabelClasses(),
-                    !disabled && 'cursor-pointer',
-                  )}
+                  className={cn(getLabelClasses(), !disabled && 'cursor-pointer')}
                   onClick={() => {
                     if (!disabled && onChange) {
                       const syntheticEvent = {
@@ -154,8 +145,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                       } as React.ChangeEvent<HTMLInputElement>;
                       onChange(syntheticEvent);
                     }
-                  }}
-                >
+                  }}>
                   {label}
                 </label>
               )}
@@ -164,8 +154,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                   className={cn(
                     'text-xs transition-colors duration-200',
                     disabled ? 'text-gray-600' : 'text-gray-400',
-                  )}
-                >
+                  )}>
                   {description}
                 </p>
               )}

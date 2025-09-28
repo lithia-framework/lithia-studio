@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from 'react';
+import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 import { LithiaContext } from './LithiaContext';
 
 export interface ServerStats {
@@ -38,9 +32,7 @@ interface ServerStatsContextType {
   isConnected: boolean;
 }
 
-const ServerStatsContext = createContext<ServerStatsContextType | undefined>(
-  undefined,
-);
+const ServerStatsContext = createContext<ServerStatsContextType | undefined>(undefined);
 
 interface ServerStatsProviderProps {
   children: ReactNode;
@@ -93,9 +85,7 @@ export function ServerStatsProvider({ children }: ServerStatsProviderProps) {
   }, [io.socket, io.isConnected]);
 
   return (
-    <ServerStatsContext.Provider value={{ stats, memoryHistory, isConnected }}>
-      {children}
-    </ServerStatsContext.Provider>
+    <ServerStatsContext.Provider value={{ stats, memoryHistory, isConnected }}>{children}</ServerStatsContext.Provider>
   );
 }
 

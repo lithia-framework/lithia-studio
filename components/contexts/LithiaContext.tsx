@@ -1,8 +1,8 @@
 'use client';
 
-import { Route } from '@/types';
 import { createContext, useEffect, useState } from 'react';
-import { Socket, io } from 'socket.io-client';
+import { io, type Socket } from 'socket.io-client';
+import type { Route } from '@/types';
 
 interface LithiaConfig {
   debug: boolean;
@@ -67,9 +67,9 @@ export const LithiaContext = createContext<LithiaContextType>({
 export const LithiaProvider = ({ children }: LithiaProviderProps) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [connectionStatus, setConnectionStatus] = useState<
-    'connecting' | 'connected' | 'disconnected' | 'error'
-  >('disconnected');
+  const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'disconnected' | 'error'>(
+    'disconnected',
+  );
   const [routes] = useState<Route[]>([]);
   const [config, setConfig] = useState<LithiaConfig | null>(null);
 
@@ -130,8 +130,7 @@ export const LithiaProvider = ({ children }: LithiaProviderProps) => {
       value={{
         io: { socket, isConnected, connectionStatus },
         app: { routes, config },
-      }}
-    >
+      }}>
       {children}
     </LithiaContext.Provider>
   );

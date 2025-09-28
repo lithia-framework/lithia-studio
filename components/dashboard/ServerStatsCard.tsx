@@ -1,7 +1,7 @@
 'use client';
 
-import { useServerStats } from '@/components/contexts/ServerStatsContext';
 import { Activity, Cpu, HardDrive, MemoryStick, Monitor } from 'lucide-react';
+import { useServerStats } from '@/components/contexts/ServerStatsContext';
 import { MemoryChart } from './MemoryChart';
 import { ServerStatsSkeleton } from './ServerStatsSkeleton';
 
@@ -39,9 +39,7 @@ export function ServerStatsCard() {
             <Activity className="text-primary h-4 w-4" />
             <p className="text-sm font-medium text-white">Uptime</p>
           </div>
-          <p className="text-primary text-sm font-bold">
-            {formatUptime(stats.uptime)}
-          </p>
+          <p className="text-primary text-sm font-bold">{formatUptime(stats.uptime)}</p>
         </div>
 
         {/* Node Version */}
@@ -70,9 +68,7 @@ export function ServerStatsCard() {
             <Cpu className="text-primary h-4 w-4" />
             <p className="text-sm font-medium text-white">CPU Usage</p>
           </div>
-          <p className="text-primary text-sm font-bold">
-            {stats.cpuUsage.toFixed(2)}ms
-          </p>
+          <p className="text-primary text-sm font-bold">{stats.cpuUsage.toFixed(2)}ms</p>
         </div>
       </div>
 

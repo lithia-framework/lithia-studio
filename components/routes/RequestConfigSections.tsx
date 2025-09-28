@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
-import { DynamicParamsTab } from './tabs/DynamicParamsTab';
-import { ParamsTab } from './tabs/ParamsTab';
-import { HeadersTab } from './tabs/HeadersTab';
+import type React from 'react';
 import { AuthTab } from './tabs/AuthTab';
-import { BodyTab, BodyData } from './tabs/BodyTab';
+import { type BodyData, BodyTab } from './tabs/BodyTab';
+import { DynamicParamsTab } from './tabs/DynamicParamsTab';
+import { HeadersTab } from './tabs/HeadersTab';
+import { ParamsTab } from './tabs/ParamsTab';
 
 interface RequestConfigSectionsProps {
   routePath: string;
@@ -66,8 +66,7 @@ export const RequestConfigSections: React.FC<RequestConfigSectionsProps> = ({
   // Check if method allows body
   const methodsWithBody = ['POST', 'PUT', 'PATCH', 'DELETE'];
   const currentMethod = routeMethod || selectedMethod;
-  const allowsBody =
-    !currentMethod || methodsWithBody.includes(currentMethod.toUpperCase());
+  const allowsBody = !currentMethod || methodsWithBody.includes(currentMethod.toUpperCase());
 
   return (
     <div className="divide-y divide-white/10">

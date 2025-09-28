@@ -1,8 +1,7 @@
 import { forwardRef } from 'react';
 import { cn } from '@/utils/cn';
 
-interface TextAreaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   variant?: 'default' | 'filled' | 'outlined';
   size?: 'sm' | 'md' | 'lg';
@@ -11,19 +10,7 @@ interface TextAreaProps
 }
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  (
-    {
-      label,
-      variant = 'default',
-      size = 'md',
-      error,
-      helperText,
-      className = '',
-      disabled,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ label, variant = 'default', size = 'md', error, helperText, className = '', disabled, ...props }, ref) => {
     const baseClasses =
       'w-full rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50 resize-vertical';
 
@@ -53,25 +40,18 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <div className="w-full">
         {label && (
-          <label className="mb-2 block text-sm font-medium text-gray-300">
+          <label htmlFor={props.id} className="mb-2 block text-sm font-medium text-gray-300">
             {label}
             {props.required && <span className="ml-1 text-red-400">*</span>}
           </label>
         )}
 
-        <textarea
-          ref={ref}
-          className={textAreaClasses}
-          disabled={disabled}
-          {...props}
-        />
+        <textarea ref={ref} className={textAreaClasses} disabled={disabled} {...props} />
 
         {(error || helperText) && (
           <div className="mt-1 text-xs">
             {error && <p className="text-red-400">{error}</p>}
-            {!error && helperText && (
-              <p className="text-gray-400">{helperText}</p>
-            )}
+            {!error && helperText && <p className="text-gray-400">{helperText}</p>}
           </div>
         )}
       </div>

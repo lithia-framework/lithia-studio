@@ -1,24 +1,17 @@
 'use client';
 
-import React from 'react';
+import { Trash2 } from 'lucide-react';
+import type React from 'react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Trash2 } from 'lucide-react';
 
 interface HeadersTabProps {
   headers: Array<{ key: string; value: string }>;
   onChange: (headers: Array<{ key: string; value: string }>) => void;
 }
 
-export const HeadersTab: React.FC<HeadersTabProps> = ({
-  headers,
-  onChange,
-}) => {
-  const updateHeader = (
-    index: number,
-    field: 'key' | 'value',
-    value: string,
-  ) => {
+export const HeadersTab: React.FC<HeadersTabProps> = ({ headers, onChange }) => {
+  const updateHeader = (index: number, field: 'key' | 'value', value: string) => {
     const newHeaders = [...headers];
     newHeaders[index] = { ...newHeaders[index], [field]: value };
     onChange(newHeaders);
@@ -72,8 +65,7 @@ export const HeadersTab: React.FC<HeadersTabProps> = ({
                   variant={headers.length === 1 ? 'secondary' : 'danger'}
                   size="md"
                   onClick={() => removeHeader(index)}
-                  disabled={headers.length === 1}
-                >
+                  disabled={headers.length === 1}>
                   <Trash2 className="h-5 w-5" />
                 </Button>
               </div>
