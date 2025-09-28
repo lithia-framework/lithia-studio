@@ -1,26 +1,118 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #020618;
+  --background-secondary: #080e22;
+  --foreground: #ffffff;
+  --primary: #2cfc81;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-mono: var(--font-fira-code);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background);
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* Monaco Editor Suggestions Popup */
+.monaco-editor .suggest-widget {
+  background: var(--background-secondary) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list {
+  background: transparent !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row {
+  background: transparent !important;
+  color: var(--foreground) !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row.focused {
+  background: rgba(44, 252, 129, 0.1) !important;
+  color: var(--primary) !important;
+}
+
+.monaco-editor
+  .suggest-widget
+  .monaco-list
+  .monaco-list-row
+  .monaco-icon-label {
+  color: var(--foreground) !important;
+}
+
+.monaco-editor
+  .suggest-widget
+  .monaco-list
+  .monaco-list-row
+  .monaco-icon-label
+  .monaco-icon-label-description-container {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.monaco-editor
+  .suggest-widget
+  .monaco-list
+  .monaco-list-row
+  .monaco-icon-label
+  .monaco-icon-label-description-container
+  .monaco-icon-label-description {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* No suggestions message */
+.monaco-editor
+  .suggest-widget
+  .monaco-list
+  .monaco-list-row
+  .monaco-icon-label
+  .monaco-icon-label-description-container
+  .monaco-icon-label-description:empty::after {
+  content: 'No suggestions.' !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  font-style: italic !important;
 }

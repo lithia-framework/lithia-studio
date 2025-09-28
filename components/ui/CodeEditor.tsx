@@ -1,0 +1,287 @@
+'use client';
+
+import Editor, { loader } from '@monaco-editor/react';
+import React, { useCallback, useEffect } from 'react';
+
+// Theme configurations
+const THEME_CONFIGS = {
+  'studio-dark': {
+    base: 'vs-dark' as const,
+    inherit: true,
+    rules: [
+      { token: 'string', foreground: 'E6B800' },
+      { token: 'number', foreground: '4ECDC4' },
+      { token: 'keyword', foreground: 'FF6B6B' },
+      { token: 'operator', foreground: 'FFFFFF' },
+      { token: 'delimiter', foreground: 'FFFFFF' },
+      { token: 'property', foreground: '74C0FC' },
+      { token: 'comment', foreground: '6C757D' },
+    ],
+    colors: {
+      'editor.background': '#080e22',
+      'editor.foreground': '#FFFFFF',
+      'editorLineNumber.foreground': '#6C757D',
+      'editor.selectionBackground': '#374151',
+      'editor.inactiveSelectionBackground': '#374151',
+      'editorCursor.foreground': '#FFFFFF',
+      'editor.lineHighlightBackground': '#020618',
+      'editorError.foreground': '#FF6B6B',
+      'editorError.border': '#FF6B6B',
+      'editorError.background': '#FF6B6B20',
+      'editorWarning.foreground': '#FFA500',
+      'editorWarning.border': '#FFA500',
+      'editorWarning.background': '#FFA50020',
+      'editorInfo.foreground': '#74C0FC',
+      'editorInfo.border': '#74C0FC',
+      'editorInfo.background': '#74C0FC20',
+      // Suggestions widget colors
+      'editorSuggestWidget.background': '#080e22',
+      'editorSuggestWidget.border': 'rgba(255, 255, 255, 0.1)',
+      'editorSuggestWidget.foreground': '#FFFFFF',
+      'editorSuggestWidget.highlightForeground': '#2CFC81',
+      'editorSuggestWidget.selectedBackground': 'rgba(44, 252, 129, 0.1)',
+      'editorSuggestWidget.selectedForeground': '#2CFC81',
+      'editorSuggestWidget.focusHighlightForeground': '#2CFC81',
+      'editorSuggestWidget.selectedIconForeground': '#2CFC81',
+      'editorSuggestWidget.selectedBorder': 'rgba(44, 252, 129, 0.2)',
+    },
+  },
+};
+
+export type ThemeName = keyof typeof THEME_CONFIGS;
+
+interface CodeEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+  language?: string;
+  height?: string;
+  placeholder?: string;
+  readOnly?: boolean;
+  showLineNumbers?: boolean;
+  showMinimap?: boolean;
+  wordWrap?: 'on' | 'off' | 'wordWrapColumn' | 'bounded';
+  fontSize?: number;
+  tabSize?: number;
+  insertSpaces?: boolean;
+  formatOnPaste?: boolean;
+  formatOnType?: boolean;
+  quickSuggestions?: boolean;
+  showSuggestions?: boolean;
+  stickyScroll?: boolean;
+  contextMenu?: boolean;
+  glyphMargin?: boolean;
+  className?: string;
+  theme?: ThemeName;
+  folding?: boolean;
+}
+
+export const CodeEditor: React.FC<CodeEditorProps> = ({
+  value,
+  onChange,
+  language = 'json',
+  height = '200px',
+  placeholder,
+  readOnly = false,
+  showLineNumbers = true,
+  showMinimap = false,
+  wordWrap = 'on',
+  fontSize = 14,
+  tabSize = 2,
+  insertSpaces = true,
+  formatOnPaste = false,
+  formatOnType = false,
+  quickSuggestions = false,
+  showSuggestions = true,
+  stickyScroll = true,
+  contextMenu = true,
+  glyphMargin = true,
+  className,
+  theme = 'studio-dark',
+  folding = false,
+}) => {
+  useEffect(() => {
+    const initializeMonaco = async () => {
+      const monaco = await loader.init();
+
+      Object.entries(THEME_CONFIGS).forEach(([themeName, themeConfig]) => {
+        monaco.editor.defineTheme(themeName, themeConfig);
+      });
+
+      // Configure TypeScript for lithia types
+      if (language === 'typescript' || language === 'javascript') {
+        monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+          target: monaco.languages.typescript.ScriptTarget.ES2020,
+          allowNonTsExtensions: true,
+          moduleResolution:
+            monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+          module: monaco.languages.typescript.ModuleKind.ESNext,
+          noEmit: true,
+          esModuleInterop: true,
+          jsx: monaco.languages.typescript.JsxEmit.React,
+          reactNamespace: 'React',
+          allowJs: true,
+          typeRoots: ['node_modules/@types'],
+        });
+
+        // Add lithia types
+        monaco.languages.typescript.typescriptDefaults.addExtraLib(
+          `
+          declare module 'lithia' {
+            export interface LithiaConfig {
+              debug?: boolean;
+              srcDir?: string;
+              routesDir?: string;
+              outputDir?: string;
+              router?: {
+                globalPrefix?: string;
+              };
+              server?: {
+                host?: string;
+                port?: number;
+                request?: {
+                  queryParser?: {
+                    array?: {
+                      enabled?: boolean;
+                      delimiter?: string;
+                    };
+                    number?: {
+                      enabled?: boolean;
+                    };
+                    boolean?: {
+                      enabled?: boolean;
+                    };
+                  };
+                  maxBodySize?: number;
+                };
+              };
+              logger?: {
+                colors?: boolean;
+                timestamp?: boolean;
+                level?: 'debug' | 'info' | 'warn' | 'error';
+              };
+              build?: {
+                mode?: 'no-bundle' | 'full-bundle';
+                externalPackages?: string[];
+              };
+              hooks?: Record<string, any[]>;
+              globalMiddlewares?: any[];
+              studio?: {
+                enabled?: boolean;
+              };
+            }
+            
+            export function defineLithiaConfig(config: LithiaConfig): LithiaConfig;
+          }
+          
+          declare module 'lithia/types' {
+            export interface LithiaConfig {
+              debug?: boolean;
+              srcDir?: string;
+              routesDir?: string;
+              outputDir?: string;
+              router?: {
+                globalPrefix?: string;
+              };
+              server?: {
+                host?: string;
+                port?: number;
+                request?: {
+                  queryParser?: {
+                    array?: {
+                      enabled?: boolean;
+                      delimiter?: string;
+                    };
+                    number?: {
+                      enabled?: boolean;
+                    };
+                    boolean?: {
+                      enabled?: boolean;
+                    };
+                  };
+                  maxBodySize?: number;
+                };
+              };
+              logger?: {
+                colors?: boolean;
+                timestamp?: boolean;
+                level?: 'debug' | 'info' | 'warn' | 'error';
+              };
+              build?: {
+                mode?: 'no-bundle' | 'full-bundle';
+                externalPackages?: string[];
+              };
+              hooks?: Record<string, any[]>;
+              globalMiddlewares?: any[];
+              studio?: {
+                enabled?: boolean;
+              };
+            }
+          }
+        `,
+          'file:///lithia-types.d.ts',
+        );
+      }
+
+      monaco.editor.setTheme(theme);
+    };
+
+    initializeMonaco();
+  }, [theme, language]);
+
+  const handleChange = useCallback(
+    (newValue: string | undefined) => {
+      const val = newValue || '';
+      onChange(val);
+    },
+    [onChange],
+  );
+
+  return (
+    <div className={className}>
+      <Editor
+        height={height}
+        defaultLanguage={language}
+        value={value}
+        onChange={handleChange}
+        theme={theme}
+        options={{
+          readOnly,
+          minimap: { enabled: showMinimap },
+          scrollBeyondLastLine: false,
+          fontSize,
+          lineNumbers: showLineNumbers ? ('on' as const) : ('off' as const),
+          wordWrap,
+          automaticLayout: true,
+          padding: { top: 8, bottom: 8 },
+          renderLineHighlight: 'none',
+          tabSize,
+          insertSpaces,
+          placeholder,
+          suggest: {
+            showKeywords: showSuggestions,
+            showSnippets: showSuggestions,
+          },
+          quickSuggestions,
+          formatOnPaste,
+          formatOnType,
+          stickyScroll: { enabled: stickyScroll },
+          contextmenu: contextMenu,
+          glyphMargin,
+          folding,
+          renderValidationDecorations: 'on',
+          hover: {
+            enabled: true,
+            delay: 300,
+            sticky: true,
+          },
+        }}
+        onMount={(editor, monaco) => {
+          editor.addCommand(
+            monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
+            () => {},
+          );
+        }}
+      />
+    </div>
+  );
+};
