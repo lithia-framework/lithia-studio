@@ -73,7 +73,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {leftIcon && (
             <div
               className={cn(
-                'absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400',
+                'absolute top-1/2 left-3 -translate-y-1/2 transform text-gray-400',
                 disabled && 'opacity-50',
               )}
             >
@@ -92,7 +92,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {rightIcon && (
             <div
               className={cn(
-                'absolute right-3 top-1/2 -translate-y-1/2 transform text-gray-400',
+                'absolute top-1/2 right-3 -translate-y-1/2 transform text-gray-400',
                 disabled && 'opacity-50',
               )}
             >

@@ -304,11 +304,11 @@ export default function NewRoutePage() {
                   className="w-full"
                 />
                 {errors.path && (
-                  <p className="text-red-400 mt-1 text-sm">
+                  <p className="mt-1 text-sm text-red-400">
                     {errors.path.message}
                   </p>
                 )}
-                <p className="text-gray-400 mt-1 text-xs">
+                <p className="mt-1 text-xs text-gray-400">
                   Use :param for dynamic parameters (e.g., /users/:id)
                 </p>
               </div>
@@ -325,14 +325,14 @@ export default function NewRoutePage() {
                 />
               </div>
 
-              <div className="rounded-lg border border-white/10 bg-background-secondary p-4">
+              <div className="bg-background-secondary rounded-lg border border-white/10 p-4">
                 <h3 className="text-foreground mb-2 text-sm font-medium">
                   Generated File
                 </h3>
-                <code className="text-green-400 text-sm">
+                <code className="text-sm text-green-400">
                   {generateFileName() || 'Enter a route path to see filename'}
                 </code>
-                <p className="text-gray-400 mt-1 text-xs">
+                <p className="mt-1 text-xs text-gray-400">
                   This file will be created in your src/routes directory using
                   the standardized route.ts naming convention
                 </p>
@@ -340,10 +340,10 @@ export default function NewRoutePage() {
 
               {conflicts.length > 0 && (
                 <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-4">
-                  <h4 className="text-red-400 mb-2 text-sm font-medium">
+                  <h4 className="mb-2 text-sm font-medium text-red-400">
                     Route Conflicts Detected
                   </h4>
-                  <ul className="text-red-300 text-xs space-y-1">
+                  <ul className="space-y-1 text-xs text-red-300">
                     {conflicts.map((conflict, index) => (
                       <li key={index}>• {conflict}</li>
                     ))}

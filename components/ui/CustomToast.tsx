@@ -42,7 +42,7 @@ export function CustomToast({ type, message, icon }: CustomToastProps) {
 
   return (
     <div
-      className={`relative flex items-center space-x-3 rounded-xl border ${config.bgColor} bg-background-secondary/80 p-4 backdrop-blur-lg shadow-lg transition-all duration-300 ease-out`}
+      className={`relative flex items-center space-x-3 rounded-xl border ${config.bgColor} bg-background-secondary/80 p-4 shadow-lg backdrop-blur-lg transition-all duration-300 ease-out`}
     >
       <div
         className={`flex h-8 w-8 items-center justify-center rounded-full ${config.iconBg}`}
@@ -50,7 +50,7 @@ export function CustomToast({ type, message, icon }: CustomToastProps) {
         {icon ? <span className="text-lg">{icon}</span> : config.icon}
       </div>
       <div className="flex-1">
-        <p className="text-sm font-medium text-foreground">{message}</p>
+        <p className="text-foreground text-sm font-medium">{message}</p>
       </div>
     </div>
   );

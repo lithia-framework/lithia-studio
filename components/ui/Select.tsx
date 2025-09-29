@@ -138,7 +138,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                   {leftIcon && (
                     <div
                       className={cn(
-                        'absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400',
+                        'absolute top-1/2 left-3 -translate-y-1/2 transform text-gray-400',
                         disabled && 'opacity-50',
                       )}
                     >
@@ -196,7 +196,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                         value={option.value}
                         disabled={option.disabled}
                         className={cn(
-                          'relative cursor-pointer select-none px-4 py-3 transition-colors duration-150',
+                          'relative cursor-pointer px-4 py-3 transition-colors duration-150 select-none',
                           'ui-active:bg-white/5 ui-selected:bg-primary/20 ui-selected:text-primary hover:bg-white/5',
                           option.disabled &&
                             'cursor-not-allowed opacity-50 hover:bg-transparent',

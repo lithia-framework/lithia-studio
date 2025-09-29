@@ -40,7 +40,7 @@ export function LoadingDialog({
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel
             transition
-            className="bg-background-secondary data-closed:transform-[scale(95%)] data-closed:opacity-0 w-full max-w-md rounded-xl border border-white/10 p-6 backdrop-blur-2xl duration-300 ease-out"
+            className="bg-background-secondary w-full max-w-md rounded-xl border border-white/10 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
           >
             <div className="space-y-4">
               <div className="flex items-center space-x-4">

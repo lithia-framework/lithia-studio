@@ -97,7 +97,7 @@ const AnimatedList = <T = string,>({
         ref={listRef}
         className={`max-h-[400px] overflow-y-auto ${
           displayScrollbar
-            ? '[&::-webkit-scrollbar-thumb]:rounded-[4px] [&::-webkit-scrollbar-thumb]:bg-[#ddd] [&::-webkit-scrollbar-track]:bg-[#f8f9fa] [&::-webkit-scrollbar]:w-[8px]'
+            ? '[&::-webkit-scrollbar]:w-[8px] [&::-webkit-scrollbar-thumb]:rounded-[4px] [&::-webkit-scrollbar-thumb]:bg-[#ddd] [&::-webkit-scrollbar-track]:bg-[#f8f9fa]'
             : 'scrollbar-hide'
         }`}
         onScroll={handleScroll}
@@ -136,11 +136,11 @@ const AnimatedList = <T = string,>({
       {showGradients && (
         <>
           <div
-            className="ease pointer-events-none absolute left-0 right-0 top-0 h-[50px] bg-gradient-to-b from-[#060010] to-transparent transition-opacity duration-300"
+            className="ease pointer-events-none absolute top-0 right-0 left-0 h-[50px] bg-gradient-to-b from-[#060010] to-transparent transition-opacity duration-300"
             style={{ opacity: topGradientOpacity }}
           ></div>
           <div
-            className="ease pointer-events-none absolute bottom-0 left-0 right-0 h-[100px] bg-gradient-to-t from-[#060010] to-transparent transition-opacity duration-300"
+            className="ease pointer-events-none absolute right-0 bottom-0 left-0 h-[100px] bg-gradient-to-t from-[#060010] to-transparent transition-opacity duration-300"
             style={{ opacity: bottomGradientOpacity }}
           ></div>
         </>
