@@ -1,50 +1,50 @@
-'use client';
+"use client";
 
-import Editor, { loader } from '@monaco-editor/react';
-import type React from 'react';
-import { useCallback, useEffect } from 'react';
+import Editor, { loader } from "@monaco-editor/react";
+import type React from "react";
+import { useCallback, useEffect } from "react";
 
 // Theme configurations
 const THEME_CONFIGS = {
-  'studio-dark': {
-    base: 'vs-dark' as const,
+  "studio-dark": {
+    base: "vs-dark" as const,
     inherit: true,
     rules: [
-      { token: 'string', foreground: 'E6B800' },
-      { token: 'number', foreground: '4ECDC4' },
-      { token: 'keyword', foreground: 'FF6B6B' },
-      { token: 'operator', foreground: 'FFFFFF' },
-      { token: 'delimiter', foreground: 'FFFFFF' },
-      { token: 'property', foreground: '74C0FC' },
-      { token: 'comment', foreground: '6C757D' },
+      { token: "string", foreground: "E6B800" },
+      { token: "number", foreground: "4ECDC4" },
+      { token: "keyword", foreground: "FF6B6B" },
+      { token: "operator", foreground: "FFFFFF" },
+      { token: "delimiter", foreground: "FFFFFF" },
+      { token: "property", foreground: "74C0FC" },
+      { token: "comment", foreground: "6C757D" },
     ],
     colors: {
-      'editor.background': '#080e22',
-      'editor.foreground': '#FFFFFF',
-      'editorLineNumber.foreground': '#6C757D',
-      'editor.selectionBackground': '#374151',
-      'editor.inactiveSelectionBackground': '#374151',
-      'editorCursor.foreground': '#FFFFFF',
-      'editor.lineHighlightBackground': '#020618',
-      'editorError.foreground': '#FF6B6B',
-      'editorError.border': '#FF6B6B',
-      'editorError.background': '#FF6B6B20',
-      'editorWarning.foreground': '#FFA500',
-      'editorWarning.border': '#FFA500',
-      'editorWarning.background': '#FFA50020',
-      'editorInfo.foreground': '#74C0FC',
-      'editorInfo.border': '#74C0FC',
-      'editorInfo.background': '#74C0FC20',
+      "editor.background": "#080e22",
+      "editor.foreground": "#FFFFFF",
+      "editorLineNumber.foreground": "#6C757D",
+      "editor.selectionBackground": "#374151",
+      "editor.inactiveSelectionBackground": "#374151",
+      "editorCursor.foreground": "#FFFFFF",
+      "editor.lineHighlightBackground": "#020618",
+      "editorError.foreground": "#FF6B6B",
+      "editorError.border": "#FF6B6B",
+      "editorError.background": "#FF6B6B20",
+      "editorWarning.foreground": "#FFA500",
+      "editorWarning.border": "#FFA500",
+      "editorWarning.background": "#FFA50020",
+      "editorInfo.foreground": "#74C0FC",
+      "editorInfo.border": "#74C0FC",
+      "editorInfo.background": "#74C0FC20",
       // Suggestions widget colors
-      'editorSuggestWidget.background': '#080e22',
-      'editorSuggestWidget.border': 'rgba(255, 255, 255, 0.1)',
-      'editorSuggestWidget.foreground': '#FFFFFF',
-      'editorSuggestWidget.highlightForeground': '#2CFC81',
-      'editorSuggestWidget.selectedBackground': 'rgba(44, 252, 129, 0.1)',
-      'editorSuggestWidget.selectedForeground': '#2CFC81',
-      'editorSuggestWidget.focusHighlightForeground': '#2CFC81',
-      'editorSuggestWidget.selectedIconForeground': '#2CFC81',
-      'editorSuggestWidget.selectedBorder': 'rgba(44, 252, 129, 0.2)',
+      "editorSuggestWidget.background": "#080e22",
+      "editorSuggestWidget.border": "rgba(255, 255, 255, 0.1)",
+      "editorSuggestWidget.foreground": "#FFFFFF",
+      "editorSuggestWidget.highlightForeground": "#2CFC81",
+      "editorSuggestWidget.selectedBackground": "rgba(44, 252, 129, 0.1)",
+      "editorSuggestWidget.selectedForeground": "#FFFFFF",
+      "editorSuggestWidget.focusHighlightForeground": "#2CFC81",
+      "editorSuggestWidget.selectedIconForeground": "#2CFC81",
+      "editorSuggestWidget.selectedBorder": "rgba(44, 252, 129, 0.2)",
     },
   },
 };
@@ -60,7 +60,7 @@ interface CodeEditorProps {
   readOnly?: boolean;
   showLineNumbers?: boolean;
   showMinimap?: boolean;
-  wordWrap?: 'on' | 'off' | 'wordWrapColumn' | 'bounded';
+  wordWrap?: "on" | "off" | "wordWrapColumn" | "bounded";
   fontSize?: number;
   tabSize?: number;
   insertSpaces?: boolean;
@@ -79,13 +79,13 @@ interface CodeEditorProps {
 export const CodeEditor: React.FC<CodeEditorProps> = ({
   value,
   onChange,
-  language = 'json',
-  height = '200px',
+  language = "json",
+  height = "200px",
   placeholder,
   readOnly = false,
   showLineNumbers = true,
   showMinimap = false,
-  wordWrap = 'on',
+  wordWrap = "on",
   fontSize = 14,
   tabSize = 2,
   insertSpaces = true,
@@ -97,7 +97,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   contextMenu = true,
   glyphMargin = true,
   className,
-  theme = 'studio-dark',
+  theme = "studio-dark",
   folding = false,
 }) => {
   useEffect(() => {
@@ -109,7 +109,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
       });
 
       // Disable TypeScript validation completely
-      if (language === 'typescript' || language === 'javascript') {
+      if (language === "typescript" || language === "javascript") {
         monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
           noSemanticValidation: true,
           noSyntaxValidation: true,
@@ -130,10 +130,10 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
 
   const handleChange = useCallback(
     (newValue: string | undefined) => {
-      const val = newValue || '';
+      const val = newValue || "";
       onChange(val);
     },
-    [onChange],
+    [onChange]
   );
 
   return (
@@ -149,11 +149,11 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
           minimap: { enabled: showMinimap },
           scrollBeyondLastLine: false,
           fontSize,
-          lineNumbers: showLineNumbers ? ('on' as const) : ('off' as const),
+          lineNumbers: showLineNumbers ? ("on" as const) : ("off" as const),
           wordWrap,
           automaticLayout: true,
           padding: { top: 8, bottom: 8 },
-          renderLineHighlight: 'none',
+          renderLineHighlight: "none",
           tabSize,
           insertSpaces,
           placeholder,
@@ -168,7 +168,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
           contextmenu: contextMenu,
           glyphMargin,
           folding,
-          renderValidationDecorations: 'off',
+          renderValidationDecorations: "off",
           hover: {
             enabled: true,
             delay: 300,
@@ -176,7 +176,10 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
           },
         }}
         onMount={(editor, monaco) => {
-          editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {});
+          editor.addCommand(
+            monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
+            () => {}
+          );
         }}
       />
     </div>
