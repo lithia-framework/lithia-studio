@@ -1,6 +1,12 @@
 'use client';
 
-import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import type { Route } from '@/types';
 import { LithiaContext } from './LithiaContext';
 
@@ -64,7 +70,9 @@ export function RoutesProvider({ children }: RoutesProviderProps) {
     refreshRoutes,
   };
 
-  return <RoutesContext.Provider value={value}>{children}</RoutesContext.Provider>;
+  return (
+    <RoutesContext.Provider value={value}>{children}</RoutesContext.Provider>
+  );
 }
 
 export function useRoutes() {

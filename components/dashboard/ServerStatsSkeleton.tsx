@@ -51,7 +51,9 @@ export function ServerStatsSkeleton() {
 
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-400">Resident Set Size (RSS)</span>
+            <span className="text-sm text-gray-400">
+              Resident Set Size (RSS)
+            </span>
             <div className="h-4 w-20 animate-pulse rounded bg-gray-700"></div>
           </div>
 

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { AlertCircle, CheckCircle, Info, XCircle } from "lucide-react";
+import { AlertCircle, CheckCircle, Info, XCircle } from 'lucide-react';
 
 interface CustomToastProps {
-  type: "success" | "error" | "info" | "warning";
+  type: 'success' | 'error' | 'info' | 'warning';
   message: string;
   icon?: string;
 }
@@ -11,29 +11,29 @@ interface CustomToastProps {
 export function CustomToast({ type, message, icon }: CustomToastProps) {
   const getToastConfig = () => {
     switch (type) {
-      case "success":
+      case 'success':
         return {
           icon: <CheckCircle className="h-5 w-5 text-green-400" />,
-          bgColor: "bg-green-500/10 border-green-500/20",
-          iconBg: "bg-green-500/20",
+          bgColor: 'bg-green-500/10 border-green-500/20',
+          iconBg: 'bg-green-500/20',
         };
-      case "error":
+      case 'error':
         return {
           icon: <XCircle className="h-5 w-5 text-red-400" />,
-          bgColor: "bg-red-500/10 border-red-500/20",
-          iconBg: "bg-red-500/20",
+          bgColor: 'bg-red-500/10 border-red-500/20',
+          iconBg: 'bg-red-500/20',
         };
-      case "warning":
+      case 'warning':
         return {
           icon: <AlertCircle className="h-5 w-5 text-yellow-400" />,
-          bgColor: "bg-yellow-500/10 border-yellow-500/20",
-          iconBg: "bg-yellow-500/20",
+          bgColor: 'bg-yellow-500/10 border-yellow-500/20',
+          iconBg: 'bg-yellow-500/20',
         };
       default:
         return {
           icon: <Info className="h-5 w-5 text-blue-400" />,
-          bgColor: "bg-blue-500/10 border-blue-500/20",
-          iconBg: "bg-blue-500/20",
+          bgColor: 'bg-blue-500/10 border-blue-500/20',
+          iconBg: 'bg-blue-500/20',
         };
     }
   };

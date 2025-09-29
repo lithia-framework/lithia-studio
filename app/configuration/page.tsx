@@ -13,7 +13,9 @@ export default function ConfigurationPage() {
       <div className="flex-shrink-0 border-b border-white/10 p-8 backdrop-blur-lg">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-foreground mb-2 text-3xl font-bold">Configuration</h1>
+            <h1 className="text-foreground mb-2 text-3xl font-bold">
+              Configuration
+            </h1>
             <p className="text-gray-400">View current Lithia configuration</p>
           </div>
         </div>

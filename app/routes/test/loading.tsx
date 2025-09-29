@@ -9,7 +9,7 @@ export default function Loading() {
           </div>
           <div
             className="absolute inset-0 w-16 h-16 border-4 border-transparent border-r-primary/50 rounded-full animate-spin"
-            style={{ animationDirection: "reverse", animationDuration: "1.5s" }}
+            style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}
           ></div>
         </div>
 
@@ -27,15 +27,15 @@ export default function Loading() {
         <div className="flex space-x-1 loading-dots">
           <div
             className="w-2 h-2 bg-primary rounded-full animate-bounce"
-            style={{ animationDelay: "0ms" }}
+            style={{ animationDelay: '0ms' }}
           ></div>
           <div
             className="w-2 h-2 bg-primary rounded-full animate-bounce"
-            style={{ animationDelay: "150ms" }}
+            style={{ animationDelay: '150ms' }}
           ></div>
           <div
             className="w-2 h-2 bg-primary rounded-full animate-bounce"
-            style={{ animationDelay: "300ms" }}
+            style={{ animationDelay: '300ms' }}
           ></div>
         </div>
       </div>

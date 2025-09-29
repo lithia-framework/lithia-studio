@@ -39,7 +39,9 @@ export const AuthTab: React.FC<AuthTabProps> = ({
       <div>
         <Select
           value={authType}
-          onChange={(value) => onAuthTypeChange(value as 'none' | 'bearer' | 'basic' | 'api-key')}
+          onChange={(value) =>
+            onAuthTypeChange(value as 'none' | 'bearer' | 'basic' | 'api-key')
+          }
           options={[
             { value: 'none', label: 'None' },
             { value: 'bearer', label: 'Bearer Token' },

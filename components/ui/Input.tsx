@@ -4,7 +4,8 @@ import type React from 'react';
 import { forwardRef } from 'react';
 import { cn } from '@/utils/cn';
 
-interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+interface InputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -74,19 +75,27 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               className={cn(
                 'absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400',
                 disabled && 'opacity-50',
-              )}>
+              )}
+            >
               {leftIcon}
             </div>
           )}
 
-          <input type={type} className={inputClasses} disabled={disabled} ref={ref} {...props} />
+          <input
+            type={type}
+            className={inputClasses}
+            disabled={disabled}
+            ref={ref}
+            {...props}
+          />
 
           {rightIcon && (
             <div
               className={cn(
                 'absolute right-3 top-1/2 -translate-y-1/2 transform text-gray-400',
                 disabled && 'opacity-50',
-              )}>
+              )}
+            >
               {rightIcon}
             </div>
           )}
@@ -95,7 +104,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {(error || helperText) && (
           <div className="mt-1 text-xs">
             {error && <p className="text-red-400">{error}</p>}
-            {!error && helperText && <p className="text-gray-400">{helperText}</p>}
+            {!error && helperText && (
+              <p className="text-gray-400">{helperText}</p>
+            )}
           </div>
         )}
       </div>

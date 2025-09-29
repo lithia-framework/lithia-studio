@@ -11,9 +11,19 @@ interface LoadingDialogProps {
   onClose?: () => void;
 }
 
-export function LoadingDialog({ isOpen, title, message, onClose }: LoadingDialogProps) {
+export function LoadingDialog({
+  isOpen,
+  title,
+  message,
+  onClose,
+}: LoadingDialogProps) {
   return (
-    <Dialog open={isOpen} as="div" className="relative z-50 focus:outline-none" onClose={() => {}}>
+    <Dialog
+      open={isOpen}
+      as="div"
+      className="relative z-50 focus:outline-none"
+      onClose={() => {}}
+    >
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -30,7 +40,8 @@ export function LoadingDialog({ isOpen, title, message, onClose }: LoadingDialog
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel
             transition
-            className="bg-background-secondary data-closed:transform-[scale(95%)] data-closed:opacity-0 w-full max-w-md rounded-xl border border-white/10 p-6 backdrop-blur-2xl duration-300 ease-out">
+            className="bg-background-secondary data-closed:transform-[scale(95%)] data-closed:opacity-0 w-full max-w-md rounded-xl border border-white/10 p-6 backdrop-blur-2xl duration-300 ease-out"
+          >
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
                 <div className="flex-shrink-0">

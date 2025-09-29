@@ -10,7 +10,8 @@ import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 
 export default function LogsPage() {
-  const { filteredLogs, filters, setFilters, exportLogs, clearLogs } = useLogs();
+  const { filteredLogs, filters, setFilters, exportLogs, clearLogs } =
+    useLogs();
 
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
 
@@ -48,11 +49,20 @@ export default function LogsPage() {
       <div className="sticky top-0 z-10 border-b border-white/10 p-8 backdrop-blur-lg">
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-foreground mb-2 text-3xl font-bold">Server Logs</h1>
-            <p className="text-gray-400">Monitor and analyze your server logs in real-time</p>
+            <h1 className="text-foreground mb-2 text-3xl font-bold">
+              Server Logs
+            </h1>
+            <p className="text-gray-400">
+              Monitor and analyze your server logs in real-time
+            </p>
           </div>
           <div className="flex items-center space-x-3">
-            <Button onClick={exportLogs} disabled={filteredLogs.length === 0} variant="secondary" size="sm">
+            <Button
+              onClick={exportLogs}
+              disabled={filteredLogs.length === 0}
+              variant="secondary"
+              size="sm"
+            >
               <Download className="h-4 w-4" />
               <span>Export</span>
             </Button>
@@ -60,7 +70,8 @@ export default function LogsPage() {
               onClick={() => setIsClearDialogOpen(true)}
               disabled={filteredLogs.length === 0}
               variant="danger"
-              size="sm">
+              size="sm"
+            >
               <Trash2 className="h-4 w-4" />
               <span>Clear All</span>
             </Button>
@@ -71,7 +82,9 @@ export default function LogsPage() {
           <div className="flex-1">
             <Input
               value={filters.searchTerm}
-              onChange={(e) => setFilters({ ...filters, searchTerm: e.target.value })}
+              onChange={(e) =>
+                setFilters({ ...filters, searchTerm: e.target.value })
+              }
               placeholder="Search logs..."
               leftIcon={<Search className="h-4 w-4" />}
               variant="default"
@@ -85,7 +98,15 @@ export default function LogsPage() {
               onChange={(value) =>
                 setFilters({
                   ...filters,
-                  levelFilter: value as 'all' | 'info' | 'warn' | 'error' | 'debug' | 'success' | 'ready' | 'wait',
+                  levelFilter: value as
+                    | 'all'
+                    | 'info'
+                    | 'warn'
+                    | 'error'
+                    | 'debug'
+                    | 'success'
+                    | 'ready'
+                    | 'wait',
                 })
               }
               options={levelOptions}
@@ -99,7 +120,14 @@ export default function LogsPage() {
               onChange={(value) =>
                 setFilters({
                   ...filters,
-                  timeFilter: value as 'all' | '15m' | '30m' | '1h' | '6h' | '24h' | '7d',
+                  timeFilter: value as
+                    | 'all'
+                    | '15m'
+                    | '30m'
+                    | '1h'
+                    | '6h'
+                    | '24h'
+                    | '7d',
                 })
               }
               options={timeOptions}

@@ -47,14 +47,21 @@ export function AddVariableDialog({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.2 }}>
+              transition={{ duration: 0.2 }}
+            >
               <DialogPanel className="bg-background-secondary w-full max-w-md rounded-xl border border-white/10 p-6 shadow-xl">
                 {/* Header */}
                 <div className="mb-4 flex items-center space-x-3">
                   {icon && <div className="flex-shrink-0">{icon}</div>}
                   <div className="flex-1">
-                    <DialogTitle className="text-lg font-semibold text-white">{title}</DialogTitle>
-                    {description && <p className="mt-1 text-sm text-gray-400">{description}</p>}
+                    <DialogTitle className="text-lg font-semibold text-white">
+                      {title}
+                    </DialogTitle>
+                    {description && (
+                      <p className="mt-1 text-sm text-gray-400">
+                        {description}
+                      </p>
+                    )}
                   </div>
                 </div>
 

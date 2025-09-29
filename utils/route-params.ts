@@ -46,12 +46,18 @@ export function hasDynamicParams(path: string): boolean {
  * @param params - Object with parameter values (e.g., { id: '123', petId: '456' })
  * @returns Path with parameters replaced (e.g., '/users/123/pets/456')
  */
-export function replaceDynamicParams(path: string, params: Record<string, string>): string {
+export function replaceDynamicParams(
+  path: string,
+  params: Record<string, string>,
+): string {
   let result = path;
 
   Object.entries(params).forEach(([key, value]) => {
     // Replace all instances of :key with the value
-    const regex = new RegExp(`:${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?=/|$)`, 'g');
+    const regex = new RegExp(
+      `:${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?=/|$)`,
+      'g',
+    );
     result = result.replace(regex, value);
   });
 
@@ -64,10 +70,15 @@ export function replaceDynamicParams(path: string, params: Record<string, string
  * @param params - Provided parameters
  * @returns Object with validation result and missing parameters
  */
-export function validateDynamicParams(path: string, params: Record<string, string>) {
+export function validateDynamicParams(
+  path: string,
+  params: Record<string, string>,
+) {
   const requiredParams = extractDynamicParams(path);
   const providedParams = Object.keys(params);
-  const missingParams = requiredParams.filter((param) => !providedParams.includes(param));
+  const missingParams = requiredParams.filter(
+    (param) => !providedParams.includes(param),
+  );
 
   return {
     isValid: missingParams.length === 0,

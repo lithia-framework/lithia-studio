@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #020618;
@@ -89,17 +89,32 @@ body {
 }
 
 /* Additional Monaco Editor styling fixes */
-.monaco-editor .suggest-widget .monaco-list .monaco-list-row .monaco-icon-label {
+.monaco-editor
+  .suggest-widget
+  .monaco-list
+  .monaco-list-row
+  .monaco-icon-label {
   border: none !important;
   outline: none !important;
 }
 
-.monaco-editor .suggest-widget .monaco-list .monaco-list-row .monaco-icon-label .monaco-icon-label-container {
+.monaco-editor
+  .suggest-widget
+  .monaco-list
+  .monaco-list-row
+  .monaco-icon-label
+  .monaco-icon-label-container {
   border: none !important;
   outline: none !important;
 }
 
-.monaco-editor .suggest-widget .monaco-list .monaco-list-row .monaco-icon-label .monaco-icon-label-container .monaco-icon-label-description-container {
+.monaco-editor
+  .suggest-widget
+  .monaco-list
+  .monaco-list-row
+  .monaco-icon-label
+  .monaco-icon-label-container
+  .monaco-icon-label-description-container {
   border: none !important;
   outline: none !important;
 }
@@ -131,7 +146,11 @@ body {
   color: var(--primary);
 }
 
-.monaco-editor .suggest-widget .monaco-list .monaco-list-row .monaco-icon-label {
+.monaco-editor
+  .suggest-widget
+  .monaco-list
+  .monaco-list-row
+  .monaco-icon-label {
   color: var(--foreground);
 }
 
@@ -155,13 +174,14 @@ body {
 }
 
 /* No suggestions message */
-.monaco-editor .suggest-widget
+.monaco-editor
+  .suggest-widget
   .monaco-list
   .monaco-list-row
   .monaco-icon-label
   .monaco-icon-label-description-container
   .monaco-icon-label-description:empty::after {
-  content: "No suggestions.";
+  content: 'No suggestions.';
   color: rgba(255, 255, 255, 0.4);
   font-style: italic;
 }
@@ -212,13 +232,14 @@ body {
   animation: toast-enter 0.3s ease-out;
 }
 
-.toast-custom .react-hot-toast[data-state="closed"] {
+.toast-custom .react-hot-toast[data-state='closed'] {
   animation: toast-exit 0.2s ease-in;
 }
 
 /* Loading Animations */
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }

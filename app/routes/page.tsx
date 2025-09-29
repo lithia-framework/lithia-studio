@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { Plus } from "lucide-react";
-import Link from "next/link";
-import { useMemo } from "react";
-import { useForm } from "react-hook-form";
-import { useRoutes } from "@/components/contexts/RoutesContext";
-import { RouteFilters } from "@/components/routes/RouteFilters";
-import { RouteList } from "@/components/routes/RouteList";
-import { RoutesSkeleton } from "@/components/routes/RoutesSkeleton";
-import { Button } from "@/components/ui/Button";
-import type { Route } from "@/types";
+import { Plus } from 'lucide-react';
+import Link from 'next/link';
+import { useMemo } from 'react';
+import { useForm } from 'react-hook-form';
+import { useRoutes } from '@/components/contexts/RoutesContext';
+import { RouteFilters } from '@/components/routes/RouteFilters';
+import { RouteList } from '@/components/routes/RouteList';
+import { RoutesSkeleton } from '@/components/routes/RoutesSkeleton';
+import { Button } from '@/components/ui/Button';
+import type { Route } from '@/types';
 
 interface RouteWithStatus extends Route {
-  status?: "active" | "inactive" | "error";
+  status?: 'active' | 'inactive' | 'error';
   lastAccessed?: Date;
   responseTime?: number;
 }
@@ -29,10 +29,10 @@ export default function RoutesPage() {
   const { watch: watchFilters, setValue: setFilterValue } = useForm<FilterForm>(
     {
       defaultValues: {
-        searchTerm: "",
-        methodFilter: "all",
+        searchTerm: '',
+        methodFilter: 'all',
       },
-    }
+    },
   );
 
   const filterValues = watchFilters();
@@ -43,7 +43,7 @@ export default function RoutesPage() {
   const filteredRoutes = useMemo(() => {
     let filtered: RouteWithStatus[] = routes.map((route) => ({
       ...route,
-      status: "active" as const,
+      status: 'active' as const,
     })) as RouteWithStatus[];
 
     // Search filter
@@ -53,16 +53,16 @@ export default function RoutesPage() {
           route.path
             .toLowerCase()
             .includes(filterValues.searchTerm.toLowerCase()) ||
-          (route.method || "")
+          (route.method || '')
             .toLowerCase()
-            .includes(filterValues.searchTerm.toLowerCase())
+            .includes(filterValues.searchTerm.toLowerCase()),
       );
     }
 
     // Method filter
-    if (filterValues.methodFilter !== "all") {
+    if (filterValues.methodFilter !== 'all') {
       filtered = filtered.filter(
-        (route) => (route.method || "ALL") === filterValues.methodFilter
+        (route) => (route.method || 'ALL') === filterValues.methodFilter,
       );
     }
 
@@ -71,11 +71,14 @@ export default function RoutesPage() {
 
   // Get available methods from routes
   const availableMethods = useMemo(() => {
-    const methodCounts = routes.reduce((acc, route) => {
-      const method = route.method || "ALL";
-      acc[method] = (acc[method] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const methodCounts = routes.reduce(
+      (acc, route) => {
+        const method = route.method || 'ALL';
+        acc[method] = (acc[method] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     const methods = Object.entries(methodCounts)
       .map(([method, count]) => ({ value: method, label: method, count }))
@@ -83,7 +86,7 @@ export default function RoutesPage() {
 
     // Add "All Methods" option at the beginning
     return [
-      { value: "all", label: "All Methods", count: routes.length },
+      { value: 'all', label: 'All Methods', count: routes.length },
       ...methods,
     ];
   }, [routes]);
@@ -117,8 +120,8 @@ export default function RoutesPage() {
             searchTerm={searchTerm}
             methodFilter={methodFilter}
             availableMethods={availableMethods}
-            onSearchChange={(value) => setFilterValue("searchTerm", value)}
-            onMethodChange={(value) => setFilterValue("methodFilter", value)}
+            onSearchChange={(value) => setFilterValue('searchTerm', value)}
+            onMethodChange={(value) => setFilterValue('methodFilter', value)}
           />
         </div>
 
@@ -157,8 +160,8 @@ export default function RoutesPage() {
             searchTerm={filterValues.searchTerm}
             methodFilter={filterValues.methodFilter}
             availableMethods={availableMethods}
-            onSearchChange={(value) => setFilterValue("searchTerm", value)}
-            onMethodChange={(value) => setFilterValue("methodFilter", value)}
+            onSearchChange={(value) => setFilterValue('searchTerm', value)}
+            onMethodChange={(value) => setFilterValue('methodFilter', value)}
           />
         </div>
       </div>
@@ -167,23 +170,23 @@ export default function RoutesPage() {
         routes={filteredRoutes}
         getMethodColor={(method) => {
           const colors = {
-            GET: "bg-green-500/20 text-green-400 border-green-500/30",
-            POST: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-            PUT: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-            DELETE: "bg-red-500/20 text-red-400 border-red-500/30",
-            PATCH: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-            HEAD: "bg-gray-500/20 text-gray-400 border-gray-500/30",
-            OPTIONS: "bg-orange-500/20 text-orange-400 border-orange-500/30",
-            ALL: "bg-pink-500/20 text-pink-400 border-pink-500/30",
+            GET: 'bg-green-500/20 text-green-400 border-green-500/30',
+            POST: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+            PUT: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+            DELETE: 'bg-red-500/20 text-red-400 border-red-500/30',
+            PATCH: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+            HEAD: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+            OPTIONS: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+            ALL: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
           };
           return colors[method as keyof typeof colors] || colors.ALL;
         }}
         getDisplayFilePath={(route) => {
           const filePath = route.sourceFilePath || route.filePath;
-          if (!filePath) return "No file path";
+          if (!filePath) return 'No file path';
 
           // Extract path relative to src
-          const srcIndex = filePath.indexOf("/src/");
+          const srcIndex = filePath.indexOf('/src/');
           if (srcIndex !== -1) {
             return filePath.substring(srcIndex + 1); // +1 to keep '/src/'
           }

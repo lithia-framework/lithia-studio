@@ -50,7 +50,8 @@ export function Button({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`group relative flex cursor-pointer items-center justify-center space-x-2 rounded-lg border font-medium backdrop-blur-lg transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${getVariantClasses()} ${getSizeClasses()} ${className} `}>
+      className={`group relative flex cursor-pointer items-center justify-center space-x-2 rounded-lg border font-medium backdrop-blur-lg transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${getVariantClasses()} ${getSizeClasses()} ${className} `}
+    >
       {children}
     </button>
   );

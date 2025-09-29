@@ -33,8 +33,12 @@ export function LogsList({ logs }: LogsListProps) {
 
           {/* Loading Text */}
           <div className="space-y-2 text-center">
-            <h3 className="text-lg font-medium text-white">Waiting for Server Logs</h3>
-            <p className="text-sm text-gray-400">New logs will appear here in real-time as they are generated</p>
+            <h3 className="text-lg font-medium text-white">
+              Waiting for Server Logs
+            </h3>
+            <p className="text-sm text-gray-400">
+              New logs will appear here in real-time as they are generated
+            </p>
           </div>
 
           {/* Progress Dots */}

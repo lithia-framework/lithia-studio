@@ -1,41 +1,41 @@
-"use client";
+'use client';
 
-import { Save } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { Save } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
-import { LithiaContext } from "@/components/contexts/LithiaContext";
-import { BackButton } from "@/components/ui/BackButton";
-import { Button } from "@/components/ui/Button";
-import { CodeEditor } from "@/components/ui/CodeEditor";
-import { LoadingDialog } from "@/components/ui/dialogs";
-import { Input } from "@/components/ui/Input";
-import { Select } from "@/components/ui/Select";
+import { LithiaContext } from '@/components/contexts/LithiaContext';
+import { BackButton } from '@/components/ui/BackButton';
+import { Button } from '@/components/ui/Button';
+import { CodeEditor } from '@/components/ui/CodeEditor';
+import { LoadingDialog } from '@/components/ui/dialogs';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
 
 interface RouteForm {
   path: string;
   method:
-    | "None"
-    | "GET"
-    | "POST"
-    | "PUT"
-    | "DELETE"
-    | "PATCH"
-    | "HEAD"
-    | "OPTIONS";
+    | 'None'
+    | 'GET'
+    | 'POST'
+    | 'PUT'
+    | 'DELETE'
+    | 'PATCH'
+    | 'HEAD'
+    | 'OPTIONS';
 }
 
 const HTTP_METHODS = [
-  { value: "None", label: "None (All Methods)" },
-  { value: "GET", label: "GET" },
-  { value: "POST", label: "POST" },
-  { value: "PUT", label: "PUT" },
-  { value: "DELETE", label: "DELETE" },
-  { value: "PATCH", label: "PATCH" },
-  { value: "HEAD", label: "HEAD" },
-  { value: "OPTIONS", label: "OPTIONS" },
+  { value: 'None', label: 'None (All Methods)' },
+  { value: 'GET', label: 'GET' },
+  { value: 'POST', label: 'POST' },
+  { value: 'PUT', label: 'PUT' },
+  { value: 'DELETE', label: 'DELETE' },
+  { value: 'PATCH', label: 'PATCH' },
+  { value: 'HEAD', label: 'HEAD' },
+  { value: 'OPTIONS', label: 'OPTIONS' },
 ];
 
 const DEFAULT_ROUTE_CODE = `import type { LithiaRequest, LithiaResponse } from 'lithia';
@@ -63,13 +63,13 @@ export default function NewRoutePage() {
     formState: { errors },
   } = useForm<RouteForm>({
     defaultValues: {
-      path: "",
-      method: "None",
+      path: '',
+      method: 'None',
     },
   });
 
-  const watchedPath = watch("path");
-  const watchedMethod = watch("method");
+  const watchedPath = watch('path');
+  const watchedMethod = watch('method');
 
   useEffect(() => {
     const validateConflicts = async () => {
@@ -79,12 +79,12 @@ export default function NewRoutePage() {
       }
 
       try {
-        io.socket?.emit("validate-route-conflicts", {
+        io.socket?.emit('validate-route-conflicts', {
           path: watchedPath,
           method: watchedMethod,
         });
       } catch (error) {
-        console.error("Error validating conflicts:", error);
+        console.error('Error validating conflicts:', error);
       }
     };
 
@@ -101,22 +101,22 @@ export default function NewRoutePage() {
     };
 
     const handleValidationError = (error: string) => {
-      console.error("Route validation error:", error);
+      console.error('Route validation error:', error);
       setConflicts([]);
     };
 
-    io.socket?.on("route-conflicts-validated", handleConflictsValidated);
-    io.socket?.on("route-validation-error", handleValidationError);
+    io.socket?.on('route-conflicts-validated', handleConflictsValidated);
+    io.socket?.on('route-validation-error', handleValidationError);
 
     return () => {
-      io.socket?.off("route-conflicts-validated", handleConflictsValidated);
-      io.socket?.off("route-validation-error", handleValidationError);
+      io.socket?.off('route-conflicts-validated', handleConflictsValidated);
+      io.socket?.off('route-validation-error', handleValidationError);
     };
   }, [io]);
 
   const onSubmit = async (data: RouteForm) => {
     if (!io.socket || !io.isConnected) {
-      toast.error("Not connected to Lithia server");
+      toast.error('Not connected to Lithia server');
       return;
     }
 
@@ -127,11 +127,11 @@ export default function NewRoutePage() {
         conflicts: string[];
       }>((resolve, reject) => {
         const timeout = setTimeout(
-          () => reject(new Error("Validation timeout")),
-          5000
+          () => reject(new Error('Validation timeout')),
+          5000,
         );
 
-        io.socket?.emit("validate-route-conflicts", {
+        io.socket?.emit('validate-route-conflicts', {
           path: data.path,
           method: data.method,
         });
@@ -141,30 +141,30 @@ export default function NewRoutePage() {
           conflicts: string[];
         }) => {
           clearTimeout(timeout);
-          io.socket?.off("route-conflicts-validated", handleValidation);
-          io.socket?.off("route-validation-error", handleError);
+          io.socket?.off('route-conflicts-validated', handleValidation);
+          io.socket?.off('route-validation-error', handleError);
           resolve(result);
         };
 
         const handleError = (error: string) => {
           clearTimeout(timeout);
-          io.socket?.off("route-conflicts-validated", handleValidation);
-          io.socket?.off("route-validation-error", handleError);
+          io.socket?.off('route-conflicts-validated', handleValidation);
+          io.socket?.off('route-validation-error', handleError);
           reject(new Error(error));
         };
 
-        io.socket?.on("route-conflicts-validated", handleValidation);
-        io.socket?.on("route-validation-error", handleError);
+        io.socket?.on('route-conflicts-validated', handleValidation);
+        io.socket?.on('route-validation-error', handleError);
       });
 
       if (validationResult.hasConflicts) {
         toast.error(
-          `Route conflicts detected: ${validationResult.conflicts.join(", ")}`
+          `Route conflicts detected: ${validationResult.conflicts.join(', ')}`,
         );
         return;
       }
     } catch {
-      toast.error("Failed to validate route conflicts");
+      toast.error('Failed to validate route conflicts');
       return;
     }
 
@@ -174,9 +174,9 @@ export default function NewRoutePage() {
       const fileName = generateFileName();
       const filePath = `src/routes/${fileName}`;
 
-      io.socket.emit("create-route", {
+      io.socket.emit('create-route', {
         path: data.path,
-        method: data.method === "None" ? undefined : data.method,
+        method: data.method === 'None' ? undefined : data.method,
         fileName,
         filePath,
         code: routeCode,
@@ -185,23 +185,23 @@ export default function NewRoutePage() {
       // Promise que resolve quando a rota é criada
       const createPromise = new Promise<void>((resolve, reject) => {
         const timeout = setTimeout(() => {
-          reject(new Error("Timeout creating route"));
+          reject(new Error('Timeout creating route'));
         }, 10000);
 
         io.socket!.on(
-          "route-created",
+          'route-created',
           (response: { success: boolean; error?: string }) => {
             clearTimeout(timeout);
             if (response.success) {
-              toast.success("Route created successfully!");
+              toast.success('Route created successfully!');
               resolve();
             } else {
-              reject(new Error(response.error || "Failed to create route"));
+              reject(new Error(response.error || 'Failed to create route'));
             }
-          }
+          },
         );
 
-        io.socket!.on("route-create-error", (error: string) => {
+        io.socket!.on('route-create-error', (error: string) => {
           clearTimeout(timeout);
           reject(new Error(error));
         });
@@ -216,42 +216,42 @@ export default function NewRoutePage() {
       await Promise.all([createPromise, minLoadingPromise]);
 
       setShowLoadingDialog(false);
-      router.push("/routes");
+      router.push('/routes');
     } catch (error) {
-      console.error("Error creating route:", error);
+      console.error('Error creating route:', error);
       toast.error(
-        error instanceof Error ? error.message : "Failed to create route"
+        error instanceof Error ? error.message : 'Failed to create route',
       );
       setShowLoadingDialog(false);
     }
   };
 
   const generateFileName = () => {
-    if (!watchedPath) return "";
+    if (!watchedPath) return '';
 
-    const cleanPath = watchedPath.replace(/^\//, "").replace(/\/$/, "");
+    const cleanPath = watchedPath.replace(/^\//, '').replace(/\/$/, '');
 
-    if (cleanPath === "") {
+    if (cleanPath === '') {
       const methodSuffix =
-        watchedMethod === "None" ? "" : `.${watchedMethod.toLowerCase()}`;
+        watchedMethod === 'None' ? '' : `.${watchedMethod.toLowerCase()}`;
       return `route${methodSuffix}.ts`;
     }
 
-    const pathParts = cleanPath.split("/");
+    const pathParts = cleanPath.split('/');
 
-    if (cleanPath.includes(":")) {
+    if (cleanPath.includes(':')) {
       const folderStructure = pathParts.map((part) =>
-        part.startsWith(":") ? `[${part.substring(1)}]` : part
+        part.startsWith(':') ? `[${part.substring(1)}]` : part,
       );
 
       const methodSuffix =
-        watchedMethod === "None" ? "" : `.${watchedMethod.toLowerCase()}`;
+        watchedMethod === 'None' ? '' : `.${watchedMethod.toLowerCase()}`;
 
-      return `${folderStructure.join("/")}/route${methodSuffix}.ts`;
+      return `${folderStructure.join('/')}/route${methodSuffix}.ts`;
     } else {
       // Static route: create folder structure with route.ts
       const methodSuffix =
-        watchedMethod === "None" ? "" : `.${watchedMethod.toLowerCase()}`;
+        watchedMethod === 'None' ? '' : `.${watchedMethod.toLowerCase()}`;
 
       return `${cleanPath}/route${methodSuffix}.ts`;
     }
@@ -275,7 +275,7 @@ export default function NewRoutePage() {
             size="sm"
           >
             <Save className="h-4 w-4" />
-            <span>{showLoadingDialog ? "Creating..." : "Create Route"}</span>
+            <span>{showLoadingDialog ? 'Creating...' : 'Create Route'}</span>
           </Button>
         </div>
       </div>
@@ -291,12 +291,12 @@ export default function NewRoutePage() {
             <form className="space-y-4">
               <div>
                 <Input
-                  {...register("path", {
-                    required: "Route path is required",
+                  {...register('path', {
+                    required: 'Route path is required',
                     pattern: {
                       value: /^\/[a-zA-Z0-9/:_-]*$/,
                       message:
-                        "Path must start with / and contain only letters, numbers, /, :, -, and _",
+                        'Path must start with / and contain only letters, numbers, /, :, -, and _',
                     },
                   })}
                   label="Route Path"
@@ -317,7 +317,7 @@ export default function NewRoutePage() {
                 <Select
                   value={watchedMethod}
                   onChange={(value) =>
-                    setValue("method", value as RouteForm["method"])
+                    setValue('method', value as RouteForm['method'])
                   }
                   options={HTTP_METHODS}
                   label="HTTP Method"
@@ -330,7 +330,7 @@ export default function NewRoutePage() {
                   Generated File
                 </h3>
                 <code className="text-green-400 text-sm">
-                  {generateFileName() || "Enter a route path to see filename"}
+                  {generateFileName() || 'Enter a route path to see filename'}
                 </code>
                 <p className="text-gray-400 mt-1 text-xs">
                   This file will be created in your src/routes directory using
@@ -376,7 +376,7 @@ export default function NewRoutePage() {
         message="Please wait while the route is being created..."
         onClose={() => {
           setShowLoadingDialog(false);
-          toast.error("Route creation cancelled");
+          toast.error('Route creation cancelled');
         }}
       />
     </div>

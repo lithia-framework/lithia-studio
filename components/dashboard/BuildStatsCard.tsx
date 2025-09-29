@@ -28,7 +28,9 @@ export function BuildStatsCard() {
             <Package className="text-primary h-4 w-4" />
             <p className="text-sm font-medium text-white">Total Builds</p>
           </div>
-          <p className="text-primary text-sm font-bold">{buildStats.totalBuilds}</p>
+          <p className="text-primary text-sm font-bold">
+            {buildStats.totalBuilds}
+          </p>
         </div>
 
         {/* Average Build Time */}
@@ -37,7 +39,9 @@ export function BuildStatsCard() {
             <Clock className="text-primary h-4 w-4" />
             <p className="text-sm font-medium text-white">Avg Build Time</p>
           </div>
-          <p className="text-primary text-sm font-bold">{formatTime(buildStats.averageBuildTime)}</p>
+          <p className="text-primary text-sm font-bold">
+            {formatTime(buildStats.averageBuildTime)}
+          </p>
         </div>
       </div>
     </div>

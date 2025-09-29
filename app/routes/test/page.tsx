@@ -16,7 +16,10 @@ import { ConfirmDialog } from '@/components/ui/dialogs/ConfirmDialog';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import type { Route } from '@/types';
-import { extractDynamicParams, replaceDynamicParams } from '@/utils/route-params';
+import {
+  extractDynamicParams,
+  replaceDynamicParams,
+} from '@/utils/route-params';
 
 interface RouteWithStatus extends Route {
   status?: 'active' | 'inactive' | 'error';
@@ -53,7 +56,9 @@ export default function RouteTestPage() {
   const { routes } = useRoutes();
   const { app } = useContext(LithiaContext);
 
-  const [selectedRoute, setSelectedRoute] = useState<RouteWithStatus | null>(null);
+  const [selectedRoute, setSelectedRoute] = useState<RouteWithStatus | null>(
+    null,
+  );
   const [apiResponse, setApiResponse] = useState<ApiResponse | null>(null);
   const [isTesting, setIsTesting] = useState(false);
   const [hasDuplicateParams, setHasDuplicateParams] = useState(false);
@@ -160,10 +165,18 @@ export default function RouteTestPage() {
       // Add authentication headers
       if (data.authType === 'bearer' && data.authToken) {
         headers.Authorization = `Bearer ${data.authToken}`;
-      } else if (data.authType === 'basic' && data.authUsername && data.authPassword) {
+      } else if (
+        data.authType === 'basic' &&
+        data.authUsername &&
+        data.authPassword
+      ) {
         const credentials = btoa(`${data.authUsername}:${data.authPassword}`);
         headers.Authorization = `Basic ${credentials}`;
-      } else if (data.authType === 'api-key' && data.authApiKey && data.authApiKeyHeader) {
+      } else if (
+        data.authType === 'api-key' &&
+        data.authApiKey &&
+        data.authApiKeyHeader
+      ) {
         headers[data.authApiKeyHeader] = data.authApiKey;
       }
 
@@ -184,7 +197,10 @@ export default function RouteTestPage() {
       const baseUrl = `http://${host}:${port}`;
 
       // Replace dynamic parameters in route path
-      const finalPath = replaceDynamicParams(selectedRoute.path, data.dynamicParams);
+      const finalPath = replaceDynamicParams(
+        selectedRoute.path,
+        data.dynamicParams,
+      );
       const url = new URL(finalPath, baseUrl);
 
       queryParams.forEach((value, key) => {
@@ -192,10 +208,20 @@ export default function RouteTestPage() {
       });
 
       // Make request
-      const validMethods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'];
+      const validMethods = [
+        'GET',
+        'POST',
+        'PUT',
+        'DELETE',
+        'PATCH',
+        'HEAD',
+        'OPTIONS',
+      ];
 
       const methodToUse = selectedRoute.method || data.method || 'GET';
-      const method = validMethods.includes(methodToUse?.toUpperCase() || '') ? methodToUse.toUpperCase() : 'GET';
+      const method = validMethods.includes(methodToUse?.toUpperCase() || '')
+        ? methodToUse.toUpperCase()
+        : 'GET';
 
       // Process body based on type
       let requestBody: string | FormData | undefined;
@@ -267,7 +293,10 @@ export default function RouteTestPage() {
       });
 
       // Detect content type and process response
-      const responseContentType = responseHeaders['content-type'] || responseHeaders['Content-Type'] || '';
+      const responseContentType =
+        responseHeaders['content-type'] ||
+        responseHeaders['Content-Type'] ||
+        '';
       let responseData: unknown;
       let responseSize: number;
 
@@ -314,10 +343,12 @@ export default function RouteTestPage() {
       if (error instanceof TypeError) {
         if (error.message.includes('Failed to fetch')) {
           errorType = 'Unable to fetch';
-          errorMessage = 'Check the browser console for detailed error information.';
+          errorMessage =
+            'Check the browser console for detailed error information.';
         } else if (error.message.includes('NetworkError')) {
           errorType = 'Unable to fetch';
-          errorMessage = 'Network connection failed. Check if server is running.';
+          errorMessage =
+            'Network connection failed. Check if server is running.';
         } else {
           errorMessage = error.message;
         }
@@ -394,7 +425,9 @@ export default function RouteTestPage() {
             <BackButton href="/routes">Back to Routes</BackButton>
             <h1 className="text-foreground text-3xl font-bold">
               <span className="flex items-baseline gap-3">
-                <span className="text-primary font-mono text-3xl">{(selectedRoute.method || 'ALL').toUpperCase()}</span>
+                <span className="text-primary font-mono text-3xl">
+                  {(selectedRoute.method || 'ALL').toUpperCase()}
+                </span>
                 <span className="font-mono text-xl">{selectedRoute.path}</span>
               </span>
             </h1>
@@ -402,7 +435,12 @@ export default function RouteTestPage() {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-3">
-            <Button type="button" onClick={handleClear} variant="danger" size="sm">
+            <Button
+              type="button"
+              onClick={handleClear}
+              variant="danger"
+              size="sm"
+            >
               <Trash2 className="h-4 w-4" />
               Clear
             </Button>
@@ -411,9 +449,20 @@ export default function RouteTestPage() {
               onClick={handleSubmit(onSubmit)}
               disabled={isTesting || !isFormValid}
               variant="primary"
-              size="sm">
-              {isTesting ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-              <span>{isTesting ? 'Testing...' : !isFormValid ? 'Fill Required Parameters' : 'Send Request'}</span>
+              size="sm"
+            >
+              {isTesting ? (
+                <RefreshCw className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
+              <span>
+                {isTesting
+                  ? 'Testing...'
+                  : !isFormValid
+                    ? 'Fill Required Parameters'
+                    : 'Send Request'}
+              </span>
             </Button>
           </div>
         </div>
@@ -424,14 +473,18 @@ export default function RouteTestPage() {
         {/* Request Panel */}
         <div className="flex-1 overflow-y-auto border-r border-white/10">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-white">Request Configuration</h2>
+            <h2 className="text-lg font-semibold text-white">
+              Request Configuration
+            </h2>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Fixed Method and URL */}
             <div className="grid grid-cols-2 gap-4 border-b border-white/10 px-6 pb-6">
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-300">Method</label>
+                <label className="mb-2 block text-sm font-medium text-gray-300">
+                  Method
+                </label>
                 <Select
                   value={watch('method') || 'GET'}
                   onChange={(value) => setValue('method', value)}
@@ -450,8 +503,14 @@ export default function RouteTestPage() {
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-300">Path</label>
-                <Input value={selectedRoute?.path || ''} disabled={true} className="font-mono" />
+                <label className="mb-2 block text-sm font-medium text-gray-300">
+                  Path
+                </label>
+                <Input
+                  value={selectedRoute?.path || ''}
+                  disabled={true}
+                  className="font-mono"
+                />
               </div>
             </div>
 
@@ -478,15 +537,23 @@ export default function RouteTestPage() {
                   urlEncoded: [{ key: '', value: '' }],
                 }
               }
-              onDynamicParamsChange={(params) => setValue('dynamicParams', params)}
+              onDynamicParamsChange={(params) =>
+                setValue('dynamicParams', params)
+              }
               onQueryParamsChange={(params) => setValue('queryParams', params)}
               onHeadersChange={(headers) => setValue('headers', headers)}
               onAuthTypeChange={(type) => setValue('authType', type)}
               onAuthTokenChange={(token) => setValue('authToken', token)}
-              onAuthUsernameChange={(username) => setValue('authUsername', username)}
-              onAuthPasswordChange={(password) => setValue('authPassword', password)}
+              onAuthUsernameChange={(username) =>
+                setValue('authUsername', username)
+              }
+              onAuthPasswordChange={(password) =>
+                setValue('authPassword', password)
+              }
               onAuthApiKeyChange={(apiKey) => setValue('authApiKey', apiKey)}
-              onAuthApiKeyHeaderChange={(header) => setValue('authApiKeyHeader', header)}
+              onAuthApiKeyHeaderChange={(header) =>
+                setValue('authApiKeyHeader', header)
+              }
               onBodyDataChange={(bodyData) => setValue('bodyData', bodyData)}
               onDuplicateParamsDetected={handleDuplicateParamsDetected}
               showValidation={!isFormValid}

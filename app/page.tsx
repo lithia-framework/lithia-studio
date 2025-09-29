@@ -12,8 +12,12 @@ export default function Home() {
       <div className="sticky top-0 z-10 border-b border-white/10 p-8 backdrop-blur-lg">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-foreground mb-2 text-3xl font-bold">Overview</h1>
-            <p className="text-gray-400">Control panel to manage your Lithia server</p>
+            <h1 className="text-foreground mb-2 text-3xl font-bold">
+              Overview
+            </h1>
+            <p className="text-gray-400">
+              Control panel to manage your Lithia server
+            </p>
           </div>
         </div>
       </div>

@@ -1,6 +1,12 @@
 'use client';
 
-import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { LithiaContext } from './LithiaContext';
 
 export interface BuildStats {
@@ -20,7 +26,9 @@ interface BuildStatsContextType {
   isConnected: boolean;
 }
 
-const BuildStatsContext = createContext<BuildStatsContextType | undefined>(undefined);
+const BuildStatsContext = createContext<BuildStatsContextType | undefined>(
+  undefined,
+);
 
 interface BuildStatsProviderProps {
   children: ReactNode;
@@ -55,7 +63,11 @@ export function BuildStatsProvider({ children }: BuildStatsProviderProps) {
     }
   }, [io.socket, io.isConnected]);
 
-  return <BuildStatsContext.Provider value={{ buildStats, isConnected }}>{children}</BuildStatsContext.Provider>;
+  return (
+    <BuildStatsContext.Provider value={{ buildStats, isConnected }}>
+      {children}
+    </BuildStatsContext.Provider>
+  );
 }
 
 export function useBuildStats() {

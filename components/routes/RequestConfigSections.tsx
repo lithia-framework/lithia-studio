@@ -68,7 +68,8 @@ export const RequestConfigSections: React.FC<RequestConfigSectionsProps> = ({
   // Check if method allows body
   const methodsWithBody = ['POST', 'PUT', 'PATCH', 'DELETE'];
   const currentMethod = routeMethod || selectedMethod;
-  const allowsBody = !currentMethod || methodsWithBody.includes(currentMethod.toUpperCase());
+  const allowsBody =
+    !currentMethod || methodsWithBody.includes(currentMethod.toUpperCase());
 
   return (
     <div className="divide-y divide-white/10">

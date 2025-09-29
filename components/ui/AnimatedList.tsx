@@ -2,7 +2,14 @@
 
 import { motion, useInView } from 'framer-motion';
 import type React from 'react';
-import { type MouseEventHandler, type ReactNode, type UIEvent, useCallback, useRef, useState } from 'react';
+import {
+  type MouseEventHandler,
+  type ReactNode,
+  type UIEvent,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
 
 interface AnimatedItemProps {
   children: ReactNode;
@@ -22,7 +29,13 @@ interface AnimatedListProps<T = string> {
   renderItem?: (item: T, index: number, isSelected: boolean) => ReactNode;
 }
 
-const AnimatedItem: React.FC<AnimatedItemProps> = ({ children, delay = 0, index, onMouseEnter, onClick }) => {
+const AnimatedItem: React.FC<AnimatedItemProps> = ({
+  children,
+  delay = 0,
+  index,
+  onMouseEnter,
+  onClick,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.5, once: false });
 
@@ -35,13 +48,14 @@ const AnimatedItem: React.FC<AnimatedItemProps> = ({ children, delay = 0, index,
       initial={{ scale: 0.7, opacity: 0 }}
       animate={inView ? { scale: 1, opacity: 1 } : { scale: 0.7, opacity: 0 }}
       transition={{ duration: 0.2, delay }}
-      className="cursor-pointer">
+      className="cursor-pointer"
+    >
       {children}
     </motion.div>
   );
 };
 
-const AnimatedList = <T = string>({
+const AnimatedList = <T = string,>({
   items = [] as T[],
   onItemSelect,
   showGradients = true,
@@ -56,10 +70,13 @@ const AnimatedList = <T = string>({
   const [bottomGradientOpacity, setBottomGradientOpacity] = useState<number>(1);
 
   const handleScroll = useCallback((e: UIEvent<HTMLDivElement>) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.target as HTMLDivElement;
+    const { scrollTop, scrollHeight, clientHeight } =
+      e.target as HTMLDivElement;
     setTopGradientOpacity(Math.min(scrollTop / 50, 1));
     const bottomDistance = scrollHeight - (scrollTop + clientHeight);
-    setBottomGradientOpacity(scrollHeight <= clientHeight ? 0 : Math.min(bottomDistance / 50, 1));
+    setBottomGradientOpacity(
+      scrollHeight <= clientHeight ? 0 : Math.min(bottomDistance / 50, 1),
+    );
   }, []);
 
   const handleItemClick = useCallback(
@@ -89,20 +106,27 @@ const AnimatedList = <T = string>({
         style={{
           scrollbarWidth: displayScrollbar ? 'thin' : 'none',
           scrollbarColor: '#ddd #f8f9fa',
-          maxHeight: className?.includes('h-full') ? '100%' : className?.includes('max-h-') ? 'inherit' : '400px',
-        }}>
+          maxHeight: className?.includes('h-full')
+            ? '100%'
+            : className?.includes('max-h-')
+              ? 'inherit'
+              : '400px',
+        }}
+      >
         {items.map((item, index) => (
           <AnimatedItem
             key={index}
             delay={0.1}
             index={index}
             onMouseEnter={() => setSelectedIndex(index)}
-            onClick={() => handleItemClick(item, index)}>
+            onClick={() => handleItemClick(item, index)}
+          >
             {renderItem ? (
               renderItem(item, index, selectedIndex === index)
             ) : (
               <div
-                className={`rounded-lg bg-[#111] p-4 ${selectedIndex === index ? 'bg-[#222]' : ''} ${itemClassName}`}>
+                className={`rounded-lg bg-[#111] p-4 ${selectedIndex === index ? 'bg-[#222]' : ''} ${itemClassName}`}
+              >
                 <p className="m-0 text-white">{String(item)}</p>
               </div>
             )}
@@ -113,10 +137,12 @@ const AnimatedList = <T = string>({
         <>
           <div
             className="ease pointer-events-none absolute left-0 right-0 top-0 h-[50px] bg-gradient-to-b from-[#060010] to-transparent transition-opacity duration-300"
-            style={{ opacity: topGradientOpacity }}></div>
+            style={{ opacity: topGradientOpacity }}
+          ></div>
           <div
             className="ease pointer-events-none absolute bottom-0 left-0 right-0 h-[100px] bg-gradient-to-t from-[#060010] to-transparent transition-opacity duration-300"
-            style={{ opacity: bottomGradientOpacity }}></div>
+            style={{ opacity: bottomGradientOpacity }}
+          ></div>
         </>
       )}
     </div>

@@ -7,7 +7,12 @@ import { CodeEditor } from '@/components/ui/CodeEditor';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 
-export type BodyType = 'none' | 'form-data' | 'x-www-form-urlencoded' | 'raw' | 'binary';
+export type BodyType =
+  | 'none'
+  | 'form-data'
+  | 'x-www-form-urlencoded'
+  | 'raw'
+  | 'binary';
 
 export interface BodyData {
   type: BodyType;
@@ -29,7 +34,10 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
   };
 
   const addFormDataField = () => {
-    const newFormData = [...bodyData.formData, { key: '', value: '', type: 'text' as const }];
+    const newFormData = [
+      ...bodyData.formData,
+      { key: '', value: '', type: 'text' as const },
+    ];
     updateBodyData({ formData: newFormData });
   };
 
@@ -38,7 +46,11 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
     updateBodyData({ formData: newFormData });
   };
 
-  const updateFormDataField = (index: number, field: 'key' | 'value' | 'type', value: string) => {
+  const updateFormDataField = (
+    index: number,
+    field: 'key' | 'value' | 'type',
+    value: string,
+  ) => {
     const newFormData = [...bodyData.formData];
     newFormData[index] = { ...newFormData[index], [field]: value };
     updateBodyData({ formData: newFormData });
@@ -54,7 +66,11 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
     updateBodyData({ urlEncoded: newUrlEncoded });
   };
 
-  const updateUrlEncodedField = (index: number, field: 'key' | 'value', value: string) => {
+  const updateUrlEncodedField = (
+    index: number,
+    field: 'key' | 'value',
+    value: string,
+  ) => {
     const newUrlEncoded = [...bodyData.urlEncoded];
     newUrlEncoded[index] = { ...newUrlEncoded[index], [field]: value };
     updateBodyData({ urlEncoded: newUrlEncoded });
@@ -72,13 +88,23 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-white">Body</h3>
         {bodyData.type === 'form-data' && (
-          <Button type="button" variant="secondary" size="sm" onClick={addFormDataField}>
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            onClick={addFormDataField}
+          >
             <Plus className="h-4 w-4" />
             Add Field
           </Button>
         )}
         {bodyData.type === 'x-www-form-urlencoded' && (
-          <Button type="button" variant="secondary" size="sm" onClick={addUrlEncodedField}>
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            onClick={addUrlEncodedField}
+          >
             <Plus className="h-4 w-4" />
             Add Field
           </Button>
@@ -154,7 +180,9 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
                   <Input
                     label={index === 0 ? 'Key' : undefined}
                     value={field.key}
-                    onChange={(e) => updateFormDataField(index, 'key', e.target.value)}
+                    onChange={(e) =>
+                      updateFormDataField(index, 'key', e.target.value)
+                    }
                     placeholder="Key"
                     variant="default"
                     size="md"
@@ -163,7 +191,9 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
                 <div className="min-w-[100px]">
                   <Select
                     value={field.type}
-                    onChange={(value) => updateFormDataField(index, 'type', value)}
+                    onChange={(value) =>
+                      updateFormDataField(index, 'type', value)
+                    }
                     options={[
                       { value: 'text', label: 'Text' },
                       { value: 'file', label: 'File' },
@@ -177,7 +207,9 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
                     <Input
                       label={index === 0 ? 'Value' : undefined}
                       value={field.value}
-                      onChange={(e) => updateFormDataField(index, 'value', e.target.value)}
+                      onChange={(e) =>
+                        updateFormDataField(index, 'value', e.target.value)
+                      }
                       placeholder="Value"
                       variant="default"
                       size="md"
@@ -200,10 +232,13 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
                 <div>
                   <Button
                     type="button"
-                    variant={bodyData.formData.length === 1 ? 'secondary' : 'danger'}
+                    variant={
+                      bodyData.formData.length === 1 ? 'secondary' : 'danger'
+                    }
                     size="md"
                     onClick={() => removeFormDataField(index)}
-                    disabled={bodyData.formData.length === 1}>
+                    disabled={bodyData.formData.length === 1}
+                  >
                     <X className="h-5 w-5" />
                   </Button>
                 </div>
@@ -222,7 +257,9 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
                   <Input
                     label={index === 0 ? 'Key' : undefined}
                     value={field.key}
-                    onChange={(e) => updateUrlEncodedField(index, 'key', e.target.value)}
+                    onChange={(e) =>
+                      updateUrlEncodedField(index, 'key', e.target.value)
+                    }
                     placeholder="Key"
                     variant="default"
                     size="md"
@@ -232,7 +269,9 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
                   <Input
                     label={index === 0 ? 'Value' : undefined}
                     value={field.value}
-                    onChange={(e) => updateUrlEncodedField(index, 'value', e.target.value)}
+                    onChange={(e) =>
+                      updateUrlEncodedField(index, 'value', e.target.value)
+                    }
                     placeholder="Value"
                     variant="default"
                     size="md"
@@ -241,10 +280,13 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
                 <div>
                   <Button
                     type="button"
-                    variant={bodyData.urlEncoded.length === 1 ? 'secondary' : 'danger'}
+                    variant={
+                      bodyData.urlEncoded.length === 1 ? 'secondary' : 'danger'
+                    }
                     size="md"
                     onClick={() => removeUrlEncodedField(index)}
-                    disabled={bodyData.urlEncoded.length === 1}>
+                    disabled={bodyData.urlEncoded.length === 1}
+                  >
                     <X className="h-5 w-5" />
                   </Button>
                 </div>
@@ -256,7 +298,9 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
 
       {bodyData.type === 'binary' && (
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-300">Binary File</label>
+          <label className="mb-2 block text-sm font-medium text-gray-300">
+            Binary File
+          </label>
           <input
             type="file"
             onChange={handleFileUpload}
@@ -264,7 +308,8 @@ export const BodyTab: React.FC<BodyTabProps> = ({ bodyData, onChange }) => {
           />
           {bodyData.binaryFile && (
             <div className="mt-2 text-sm text-gray-400">
-              Selected: {bodyData.binaryFile.name} ({Math.round(bodyData.binaryFile.size / 1024)} KB)
+              Selected: {bodyData.binaryFile.name} (
+              {Math.round(bodyData.binaryFile.size / 1024)} KB)
             </div>
           )}
         </div>

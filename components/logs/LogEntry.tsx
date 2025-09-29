@@ -55,13 +55,20 @@ export function LogEntry({ log }: LogEntryProps) {
   return (
     <div
       className="hover:bg-background-secondary group cursor-pointer px-6 py-4 font-mono transition-all"
-      onClick={copyToClipboard}>
+      onClick={copyToClipboard}
+    >
       <div className="flex items-start space-x-4">
         <div className="min-w-0 flex-1">
           <div className="mb-1 flex items-center space-x-2">
-            <span className="text-xs text-gray-400">{formatTimestamp(log.timestamp)}</span>
+            <span className="text-xs text-gray-400">
+              {formatTimestamp(log.timestamp)}
+            </span>
             <span className="text-gray-500">•</span>
-            <span className={`rounded text-xs font-medium uppercase ${getLevelColor(log.level)}`}>{log.level}</span>
+            <span
+              className={`rounded text-xs font-medium uppercase ${getLevelColor(log.level)}`}
+            >
+              {log.level}
+            </span>
             {log.callerInfo && (
               <>
                 <span className="text-gray-500">•</span>

@@ -1,6 +1,13 @@
 'use client';
 
-import { Area, ComposedChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Area,
+  ComposedChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import type { MemoryDataPoint } from '@/components/contexts/ServerStatsContext';
 
 interface MemoryChartProps {
@@ -35,7 +42,11 @@ export function MemoryChart({ data }: MemoryChartProps) {
   return (
     <div className="h-48 w-full [&_*]:focus:outline-none [&_*]:focus-visible:outline-none">
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={data} margin={{ top: 20, right: 20, left: 20, bottom: 20 }} style={{ outline: 'none' }}>
+        <ComposedChart
+          data={data}
+          margin={{ top: 20, right: 20, left: 20, bottom: 20 }}
+          style={{ outline: 'none' }}
+        >
           <XAxis
             dataKey="timestamp"
             tickFormatter={formatTime}
@@ -54,14 +65,20 @@ export function MemoryChart({ data }: MemoryChartProps) {
               if (active && payload && payload.length) {
                 return (
                   <div className="bg-background-secondary rounded-lg border border-white/10 p-3 shadow-lg">
-                    <p className="mb-2 text-xs text-gray-400">{formatTime(label as number)}</p>
+                    <p className="mb-2 text-xs text-gray-400">
+                      {formatTime(label as number)}
+                    </p>
                     {payload.map((entry, index) => (
                       <div key={index} className="flex items-center space-x-2">
-                        <div className="h-2 w-2 rounded-full" style={{ backgroundColor: entry.color }} />
+                        <div
+                          className="h-2 w-2 rounded-full"
+                          style={{ backgroundColor: entry.color }}
+                        />
                         <span className="text-xs text-white">
                           {entry.dataKey === 'rss' && 'RSS'}
                           {entry.dataKey === 'heapUsed' && 'Heap Used'}
-                          {entry.dataKey === 'heapTotal' && 'Heap Total'}: {formatBytes(entry.value as number)}
+                          {entry.dataKey === 'heapTotal' && 'Heap Total'}:{' '}
+                          {formatBytes(entry.value as number)}
                         </span>
                       </div>
                     ))}

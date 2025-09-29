@@ -19,7 +19,10 @@ interface ResponsePanelProps {
   isTesting: boolean;
 }
 
-export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTesting }) => {
+export const ResponsePanel: React.FC<ResponsePanelProps> = ({
+  response,
+  isTesting,
+}) => {
   const getStatusColor = (status: number) => {
     if (status >= 200 && status < 300) return 'text-green-400';
     if (status >= 300 && status < 400) return 'text-yellow-400';
@@ -28,20 +31,32 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
   };
 
   const getStatusIcon = (status: number) => {
-    if (status >= 200 && status < 300) return <CheckCircle className="h-4 w-4 text-green-400" />;
-    if (status >= 300 && status < 400) return <AlertCircle className="h-4 w-4 text-yellow-400" />;
-    if (status >= 400 && status < 500) return <AlertCircle className="h-4 w-4 text-orange-400" />;
+    if (status >= 200 && status < 300)
+      return <CheckCircle className="h-4 w-4 text-green-400" />;
+    if (status >= 300 && status < 400)
+      return <AlertCircle className="h-4 w-4 text-yellow-400" />;
+    if (status >= 400 && status < 500)
+      return <AlertCircle className="h-4 w-4 text-orange-400" />;
     return <XCircle className="h-4 w-4 text-red-400" />;
   };
 
   const detectContentType = (headers: Record<string, string>) => {
-    const contentType = headers['content-type'] || headers['Content-Type'] || '';
+    const contentType =
+      headers['content-type'] || headers['Content-Type'] || '';
 
     if (contentType.includes('application/json')) return 'json';
     if (contentType.includes('text/html')) return 'html';
-    if (contentType.includes('text/xml') || contentType.includes('application/xml')) return 'xml';
+    if (
+      contentType.includes('text/xml') ||
+      contentType.includes('application/xml')
+    )
+      return 'xml';
     if (contentType.includes('text/plain')) return 'plaintext';
-    if (contentType.includes('application/javascript') || contentType.includes('text/javascript')) return 'javascript';
+    if (
+      contentType.includes('application/javascript') ||
+      contentType.includes('text/javascript')
+    )
+      return 'javascript';
     if (contentType.includes('text/css')) return 'css';
     if (contentType.includes('text/markdown')) return 'markdown';
 
@@ -49,11 +64,16 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
   };
 
   const isFileResponse = (headers: Record<string, string>) => {
-    const contentType = headers['content-type'] || headers['Content-Type'] || '';
-    const contentDisposition = headers['content-disposition'] || headers['Content-Disposition'] || '';
+    const contentType =
+      headers['content-type'] || headers['Content-Type'] || '';
+    const contentDisposition =
+      headers['content-disposition'] || headers['Content-Disposition'] || '';
 
     // Check if it's a file based on content-disposition header
-    if (contentDisposition.includes('attachment') || contentDisposition.includes('filename=')) {
+    if (
+      contentDisposition.includes('attachment') ||
+      contentDisposition.includes('filename=')
+    ) {
       return true;
     }
 
@@ -75,16 +95,20 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
   };
 
   const getFileName = (headers: Record<string, string>) => {
-    const contentDisposition = headers['content-disposition'] || headers['Content-Disposition'] || '';
+    const contentDisposition =
+      headers['content-disposition'] || headers['Content-Disposition'] || '';
 
     // Extract filename from content-disposition header
-    const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+    const filenameMatch = contentDisposition.match(
+      /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/,
+    );
     if (filenameMatch?.[1]) {
       return filenameMatch[1].replace(/['"]/g, '');
     }
 
     // Fallback filename based on content type
-    const contentType = headers['content-type'] || headers['Content-Type'] || '';
+    const contentType =
+      headers['content-type'] || headers['Content-Type'] || '';
     if (contentType.includes('application/pdf')) return 'document.pdf';
     if (contentType.includes('image/')) return 'image.jpg';
     if (contentType.includes('video/')) return 'video.mp4';
@@ -96,7 +120,10 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
   const downloadFile = (data: unknown, headers: Record<string, string>) => {
     try {
       const fileName = getFileName(headers);
-      const contentType = headers['content-type'] || headers['Content-Type'] || 'application/octet-stream';
+      const contentType =
+        headers['content-type'] ||
+        headers['Content-Type'] ||
+        'application/octet-stream';
 
       // Create blob from data
       let blob: Blob;
@@ -163,8 +190,12 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
           <div className="flex flex-col items-center justify-center space-y-6">
             {/* Loading Text */}
             <div className="space-y-2 text-center">
-              <h3 className="text-lg font-medium text-white">Processing Request</h3>
-              <p className="text-sm text-gray-400">Please wait while we test your route...</p>
+              <h3 className="text-lg font-medium text-white">
+                Processing Request
+              </h3>
+              <p className="text-sm text-gray-400">
+                Please wait while we test your route...
+              </p>
             </div>
 
             {/* Progress Dots */}
@@ -183,7 +214,9 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
     return (
       <div className="bg-background-secondary rounded-lg border border-white/10 p-6">
         <div className="text-center text-gray-400">
-          <p>No response yet. Click &quot;Send Request&quot; to test the route.</p>
+          <p>
+            No response yet. Click &quot;Send Request&quot; to test the route.
+          </p>
         </div>
       </div>
     );
@@ -200,10 +233,18 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             {getStatusIcon(response.status)}
-            <span className={`text-lg font-semibold ${getStatusColor(response.status)}`}>
-              {response.status === 0 ? response.statusText : `${response.status} ${response.statusText}`}
+            <span
+              className={`text-lg font-semibold ${getStatusColor(response.status)}`}
+            >
+              {response.status === 0
+                ? response.statusText
+                : `${response.status} ${response.statusText}`}
             </span>
-            {isNetworkError && <span className="rounded-full bg-red-500/20 px-2 py-1 text-xs text-red-400">ERROR</span>}
+            {isNetworkError && (
+              <span className="rounded-full bg-red-500/20 px-2 py-1 text-xs text-red-400">
+                ERROR
+              </span>
+            )}
           </div>
           <div className="text-sm text-gray-400">
             {response.responseTime}ms • {response.size} bytes
@@ -211,10 +252,15 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
         </div>
 
         {/* Error Details - Only show for network errors */}
-        {isNetworkError && response.data && typeof response.data === 'object' && 'error' in response.data ? (
+        {isNetworkError &&
+        response.data &&
+        typeof response.data === 'object' &&
+        'error' in response.data ? (
           <div className="mt-3 rounded-lg border border-red-500/20 bg-red-500/10 p-3">
             <div className="text-sm">
-              <p className="font-medium text-red-400">{String((response.data as { error: string }).error)}</p>
+              <p className="font-medium text-red-400">
+                {String((response.data as { error: string }).error)}
+              </p>
             </div>
           </div>
         ) : null}
@@ -223,7 +269,9 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
       {/* Response Headers - Only show if we have headers and it's not a network error */}
       {!isNetworkError && Object.keys(response.headers).length > 0 ? (
         <div className="bg-background-secondary rounded-lg border border-white/10 p-4">
-          <h3 className="mb-3 text-sm font-medium text-gray-300">Response Headers</h3>
+          <h3 className="mb-3 text-sm font-medium text-gray-300">
+            Response Headers
+          </h3>
           <div className="space-y-1">
             {Object.entries(response.headers).map(([key, value]) => (
               <div key={key} className="flex justify-between text-sm">
@@ -249,7 +297,8 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
                   type="button"
                   variant="secondary"
                   size="sm"
-                  onClick={() => downloadFile(response.data, response.headers)}>
+                  onClick={() => downloadFile(response.data, response.headers)}
+                >
                   <Download className="h-4 w-4" />
                   Download
                 </Button>
@@ -264,16 +313,26 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, isTestin
                   <Download className="mx-auto mb-2 h-8 w-8" />
                 </div>
                 <p className="text-sm text-gray-400">File response detected</p>
-                <p className="text-xs text-gray-500">Click &quot;Download&quot; to save the file</p>
-                <p className="font-mono text-xs text-gray-500">{getFileName(response.headers)}</p>
+                <p className="text-xs text-gray-500">
+                  Click &quot;Download&quot; to save the file
+                </p>
+                <p className="font-mono text-xs text-gray-500">
+                  {getFileName(response.headers)}
+                </p>
               </div>
             </div>
           ) : (
             <CodeEditor
-              value={formatResponseData(response.data, detectContentType(response.headers))}
+              value={formatResponseData(
+                response.data,
+                detectContentType(response.headers),
+              )}
               onChange={() => {}} // No-op since it's read-only
               language={detectContentType(response.headers)}
-              height={calculateResponseHeight(response.data, detectContentType(response.headers))}
+              height={calculateResponseHeight(
+                response.data,
+                detectContentType(response.headers),
+              )}
               readOnly={true}
               stickyScroll={false}
               showLineNumbers={false}
