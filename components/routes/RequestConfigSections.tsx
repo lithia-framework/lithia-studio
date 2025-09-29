@@ -32,6 +32,7 @@ interface RequestConfigSectionsProps {
   onAuthApiKeyHeaderChange: (header: string) => void;
   onBodyDataChange: (bodyData: BodyData) => void;
   onDuplicateParamsDetected?: () => void;
+  showValidation?: boolean;
 }
 
 export const RequestConfigSections: React.FC<RequestConfigSectionsProps> = ({
@@ -59,6 +60,7 @@ export const RequestConfigSections: React.FC<RequestConfigSectionsProps> = ({
   onAuthApiKeyHeaderChange,
   onBodyDataChange,
   onDuplicateParamsDetected,
+  showValidation = false,
 }) => {
   // Check if route has dynamic parameters
   const hasDynamicParams = routePath.includes(':');
@@ -78,6 +80,7 @@ export const RequestConfigSections: React.FC<RequestConfigSectionsProps> = ({
             dynamicParams={dynamicParams}
             onChange={onDynamicParamsChange}
             onDuplicateParamsDetected={onDuplicateParamsDetected}
+            showValidation={showValidation}
           />
         </div>
       )}

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import type React from 'react';
 import type { Route } from '@/types';
 import { RouteEntry } from './RouteEntry';
@@ -12,12 +13,11 @@ interface RouteWithStatus extends Route {
 
 interface RouteListProps {
   routes: RouteWithStatus[];
-  onRouteClick: (route: RouteWithStatus) => void;
   getMethodColor: (method: string | undefined) => string;
   getDisplayFilePath: (route: RouteWithStatus) => string;
 }
 
-export const RouteList: React.FC<RouteListProps> = ({ routes, onRouteClick, getMethodColor, getDisplayFilePath }) => {
+export const RouteList: React.FC<RouteListProps> = ({ routes, getMethodColor, getDisplayFilePath }) => {
   return (
     <div className="">
       {routes.length === 0 ? (
@@ -31,13 +31,11 @@ export const RouteList: React.FC<RouteListProps> = ({ routes, onRouteClick, getM
       ) : (
         <div className="max-h-[600px] divide-y divide-white/10">
           {routes.map((route, index) => (
-            <RouteEntry
+            <Link
               key={`${route.method}-${route.path}-${index}`}
-              route={route}
-              onClick={() => onRouteClick(route)}
-              getMethodColor={getMethodColor}
-              getDisplayFilePath={getDisplayFilePath}
-            />
+              href={`/routes/test?path=${encodeURIComponent(route.path)}`}>
+              <RouteEntry route={route} getMethodColor={getMethodColor} getDisplayFilePath={getDisplayFilePath} />
+            </Link>
           ))}
         </div>
       )}

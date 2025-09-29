@@ -10,6 +10,7 @@ interface DynamicParamsTabProps {
   dynamicParams: Record<string, string>;
   onChange: (params: Record<string, string>) => void;
   onDuplicateParamsDetected?: () => void;
+  showValidation?: boolean;
 }
 
 export const DynamicParamsTab: React.FC<DynamicParamsTabProps> = ({
@@ -17,6 +18,7 @@ export const DynamicParamsTab: React.FC<DynamicParamsTabProps> = ({
   dynamicParams,
   onChange,
   onDuplicateParamsDetected,
+  showValidation = false,
 }) => {
   const dynamicParamInfo = extractDynamicParamsWithKeys(routePath);
 
@@ -51,21 +53,28 @@ export const DynamicParamsTab: React.FC<DynamicParamsTabProps> = ({
       <h3 className="text-lg font-semibold text-white">Dynamic Parameters</h3>
       <div>
         <div className="space-y-3">
-          {dynamicParamInfo.map((paramInfo) => (
-            <Input
-              key={paramInfo.key}
-              label={`${paramInfo.name} ${
-                dynamicParamInfo.filter((p) => p.name === paramInfo.name).length > 1
-                  ? `(${paramInfo.position + 1})`
-                  : ''
-              }`}
-              value={dynamicParams[paramInfo.name] || ''}
-              onChange={(e) => updateParam(paramInfo.name, e.target.value)}
-              placeholder={`Enter ${paramInfo.name} value`}
-              variant="default"
-              size="md"
-            />
-          ))}
+          {dynamicParamInfo.map((paramInfo) => {
+            const value = dynamicParams[paramInfo.name] || '';
+            const isEmpty = showValidation && (!value || value.trim() === '');
+
+            return (
+              <Input
+                key={paramInfo.key}
+                label={`${paramInfo.name} ${
+                  dynamicParamInfo.filter((p) => p.name === paramInfo.name).length > 1
+                    ? `(${paramInfo.position + 1})`
+                    : ''
+                }`}
+                value={value}
+                onChange={(e) => updateParam(paramInfo.name, e.target.value)}
+                placeholder={`Enter ${paramInfo.name} value`}
+                variant="default"
+                size="md"
+                error={isEmpty ? 'This parameter is required' : undefined}
+                required={true}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

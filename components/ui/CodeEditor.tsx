@@ -108,118 +108,18 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
         monaco.editor.defineTheme(themeName, themeConfig);
       });
 
-      // Configure TypeScript for lithia types
+      // Disable TypeScript validation completely
       if (language === 'typescript' || language === 'javascript') {
-        monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-          target: monaco.languages.typescript.ScriptTarget.ES2020,
-          allowNonTsExtensions: true,
-          moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-          module: monaco.languages.typescript.ModuleKind.ESNext,
-          noEmit: true,
-          esModuleInterop: true,
-          jsx: monaco.languages.typescript.JsxEmit.React,
-          reactNamespace: 'React',
-          allowJs: true,
-          typeRoots: ['node_modules/@types'],
+        monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+          noSemanticValidation: true,
+          noSyntaxValidation: true,
+          noSuggestionDiagnostics: true,
         });
 
-        // Add lithia types
-        monaco.languages.typescript.typescriptDefaults.addExtraLib(
-          `
-          declare module 'lithia' {
-            export interface LithiaConfig {
-              debug?: boolean;
-              srcDir?: string;
-              routesDir?: string;
-              outputDir?: string;
-              router?: {
-                globalPrefix?: string;
-              };
-              server?: {
-                host?: string;
-                port?: number;
-                request?: {
-                  queryParser?: {
-                    array?: {
-                      enabled?: boolean;
-                      delimiter?: string;
-                    };
-                    number?: {
-                      enabled?: boolean;
-                    };
-                    boolean?: {
-                      enabled?: boolean;
-                    };
-                  };
-                  maxBodySize?: number;
-                };
-              };
-              logger?: {
-                colors?: boolean;
-                timestamp?: boolean;
-                level?: 'debug' | 'info' | 'warn' | 'error';
-              };
-              build?: {
-                mode?: 'no-bundle' | 'full-bundle';
-                externalPackages?: string[];
-              };
-              hooks?: Record<string, any[]>;
-              globalMiddlewares?: any[];
-              studio?: {
-                enabled?: boolean;
-              };
-            }
-            
-            export function defineLithiaConfig(config: LithiaConfig): LithiaConfig;
-          }
-          
-          declare module 'lithia/types' {
-            export interface LithiaConfig {
-              debug?: boolean;
-              srcDir?: string;
-              routesDir?: string;
-              outputDir?: string;
-              router?: {
-                globalPrefix?: string;
-              };
-              server?: {
-                host?: string;
-                port?: number;
-                request?: {
-                  queryParser?: {
-                    array?: {
-                      enabled?: boolean;
-                      delimiter?: string;
-                    };
-                    number?: {
-                      enabled?: boolean;
-                    };
-                    boolean?: {
-                      enabled?: boolean;
-                    };
-                  };
-                  maxBodySize?: number;
-                };
-              };
-              logger?: {
-                colors?: boolean;
-                timestamp?: boolean;
-                level?: 'debug' | 'info' | 'warn' | 'error';
-              };
-              build?: {
-                mode?: 'no-bundle' | 'full-bundle';
-                externalPackages?: string[];
-              };
-              hooks?: Record<string, any[]>;
-              globalMiddlewares?: any[];
-              studio?: {
-                enabled?: boolean;
-              };
-            }
-          }
-        `,
-          'file:///lithia-types.d.ts',
-        );
+        monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+          noLib: true,
+          allowNonTsExtensions: true,
+        });
       }
 
       monaco.editor.setTheme(theme);
@@ -268,7 +168,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
           contextmenu: contextMenu,
           glyphMargin,
           folding,
-          renderValidationDecorations: 'on',
+          renderValidationDecorations: 'off',
           hover: {
             enabled: true,
             delay: 300,

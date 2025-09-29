@@ -11,16 +11,13 @@ interface RouteWithStatus extends Route {
 
 interface RouteEntryProps {
   route: RouteWithStatus;
-  onClick: () => void;
   getMethodColor: (method: string | undefined) => string;
   getDisplayFilePath: (route: RouteWithStatus) => string;
 }
 
-export const RouteEntry: React.FC<RouteEntryProps> = ({ route, onClick, getMethodColor, getDisplayFilePath }) => {
+export const RouteEntry: React.FC<RouteEntryProps> = ({ route, getMethodColor, getDisplayFilePath }) => {
   return (
-    <div
-      onClick={onClick}
-      className="hover:bg-background-secondary group cursor-pointer px-6 py-4 font-mono transition-all">
+    <div className="hover:bg-background-secondary group px-6 py-4 font-mono transition-all">
       <div className="flex items-start space-x-4">
         <div className="min-w-0 flex-1">
           <div className="mb-1 flex items-center space-x-2">
