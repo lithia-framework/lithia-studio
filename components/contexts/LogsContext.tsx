@@ -171,9 +171,7 @@ export function LogsProvider({ children }: LogsProviderProps) {
   };
 
   const clearLogs = () => {
-    if (window.confirm('Are you sure you want to clear all logs?')) {
-      setLogs([]);
-    }
+    setLogs([]);
   };
 
   const value: LogsContextType = {
