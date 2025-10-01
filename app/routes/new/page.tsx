@@ -40,10 +40,10 @@ const HTTP_METHODS = [
 
 const DEFAULT_ROUTE_CODE = `import type { LithiaRequest, LithiaResponse } from 'lithia';
 
-export default async function handler(
+export default async (
   req: LithiaRequest,
   res: LithiaResponse
-) {
+) => {
   // Your route logic here
   res.send('Hello from your new route!');
 }`;
